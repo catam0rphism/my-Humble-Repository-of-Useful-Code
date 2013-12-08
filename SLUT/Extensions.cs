@@ -17,4 +17,37 @@ namespace SLUT
         }
 
     }
+
+    public static class MatrixExtensions
+    {
+        #region Higher-order functions
+        public static Matrix Map(this Matrix m, Func<double, double> f)
+        {
+            for (int w = 0; w < m.Width; w++)
+            {
+                for (int h = 0; h < m.Height; h++)
+                {
+                    m[h, w] = f(m[h, w]);
+                }
+            }
+            return m;
+        }
+
+        public static Matrix Map2(this Matrix m1, Matrix m2, Func<double, double, double> f)
+        {
+            if (m1.Height != m2.Height || m1.Width != m2.Width)
+                throw new ArgumentException("Матрицы разного размера");
+
+            Matrix m3 = new Matrix(m1.Width, m1.Height);
+            for (int w = 0; w < m1.Width; w++)
+            {
+                for (int h = 0; h < m1.Height; h++)
+                {
+                    m3[h, w] = f(m1[h, w], m2[h, w]);
+                }
+            }
+            return m3;
+        }
+        #endregion
+    }
 }
