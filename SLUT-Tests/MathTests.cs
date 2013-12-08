@@ -11,9 +11,9 @@ namespace SLUT_Tests
         [TestMethod]
         public void Initialize_Matrix_using_width_height_constructor()
         {
-            Matrix m = new Matrix(4, 4);
+            Matrix m = new Matrix(2, 5);
 
-            CollectionAssert.AreEqual(new double[4, 4], m.GetArray());
+            CollectionAssert.AreEqual(new double[2, 5], m.GetArray());
         }
         [TestMethod]
         public void Initialize_matrix_using_double_array_comstructor()
@@ -31,9 +31,64 @@ namespace SLUT_Tests
         {
             Matrix matrix = new Matrix(new double[2, 3] { { 1, 2, 3 }, 
                                                           { 4, 5, 6 } });
-
-
+            
             CollectionAssert.AreEqual(new double[] { 4, 5, 6 },  matrix.GetRow(2).ToArray());
+            CollectionAssert.AreEqual(new double[] { 2, 5 }, matrix.GetColumn(2).ToArray());
+        }
+
+        [TestMethod]
+        public void Get_matrix_element_by_index()
+        {
+            Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, 
+                                                  { 4, 5, 6 } });
+
+            Assert.AreEqual(3, m[0, 2]);
+            Assert.AreEqual(5, m[1, 1]);
+        }
+
+        [TestMethod]
+        public void Sum_two_matrix()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1, 1, 1 }, 
+                                                   { 2, 2, 2 } });
+
+            Matrix m2 = new Matrix(new double[,] { { 2, 3, 3 }, 
+                                                   { 2, 3, 3 } });
+
+            Matrix m3 = m1 + m2;
+
+            CollectionAssert.AreEqual(new double[,] { { 3, 4, 4 }, { 4, 5, 5 } }, m3.GetArray());
+
+        }
+
+        [TestMethod]
+        public void Sum_diferent_size_matrix()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1, 1, 1 }, 
+                                                   { 2, 2, 2 } });
+
+            Matrix m2 = new Matrix(new double[,] { { 4 } });
+
+            try
+            {
+                Matrix m3 = m1 + m2;
+                Assert.Fail();
+            }
+            catch (ArgumentException e) { }
+        }
+
+        [TestMethod]
+        public void Subtract_two_matrix()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1, 1, 1 }, 
+                                                   { 2, 2, 2 } }); 
+            
+            Matrix m2 = new Matrix(new double[,] { { 1, 1, 1 }, 
+                                                   { 2, 2, 2 } });
+
+            Matrix m3 = m1 - m2;
+
+            CollectionAssert.AreEqual(new double[,] { { 0, 0, 0 }, { 0, 0, 0 } }, m3.GetArray());
         }
     }
 }
