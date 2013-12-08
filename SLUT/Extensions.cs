@@ -15,5 +15,6 @@ namespace SLUT
                 func(item);
             }
         }
+
     }
 }
