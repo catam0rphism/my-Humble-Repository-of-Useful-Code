@@ -90,5 +90,22 @@ namespace SLUT_Tests
 
             CollectionAssert.AreEqual(new double[,] { { 0, 0, 0 }, { 0, 0, 0 } }, m3.GetArray());
         }
+
+        [TestMethod]
+        public void Multiple_two_matrix()
+        {
+            Matrix m1 = new Matrix(new double[,] { { 1, 1, 1 }, 
+                                                   { 2, 2, 2 } });
+
+            Matrix m2 = new Matrix(new double[,] { { 1, 3 }, 
+                                                   { 4, 5 }, 
+                                                   { 2, 2 } });
+
+            Matrix m3 = m1 * m2;
+
+            var res = new double[,] { { 7, 10 }, { 14, 20 } };
+
+            CollectionAssert.AreEqual(res, m3.GetArray());
+        }
     }
 }

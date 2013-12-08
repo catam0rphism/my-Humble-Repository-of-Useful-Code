@@ -86,6 +86,8 @@ namespace SLUT
         }
         
         private double[,] matrix;
+
+        // TODO: Функции высшего порядка для матриц, реализация операций через них
         #region operators
         public static Matrix operator +(Matrix matrix1, Matrix matrix2)
         {
@@ -126,6 +128,48 @@ namespace SLUT
             }
 
             return m;
+        }
+        public static Matrix operator *(Matrix m, double k)
+        {
+            // add IClonabe interface implementation
+            // and change this to "m.Clone()"
+            Matrix res = new Matrix(m.Height,m.Width);
+
+            for (int i = 0; i < m.Width; i++)
+            {
+                for (int j = 0; j < m.Height; j++)
+                {
+                    res[j, i] = m[j, i] * k;
+                }
+            }
+
+            return res;
+            
+        }
+        public static Matrix operator *(Matrix m1, Matrix m2)
+        {
+            if (m1.Width != m2.Height)
+                throw new ArgumentException("Форма матриц не согласована");
+            
+            int res_w, res_h;
+            res_w = m2.Width;
+            res_h = m1.Height;
+
+            Matrix res = new Matrix(res_h,res_w);
+
+            for (int i = 0; i < res_h; i++)
+            {
+                for (int j = 0; j < res_w; j++)
+                {
+                    var row = m1.GetRow(i+1); // i+1 - тк GetRow() берет номер! а не индекс
+                    var column = m2.GetColumn(j+1);
+                    
+                    // Складываем произведения соответствующих элементов
+                    res[i,j] = Enumerable.Zip(row, column, (a, b) => a * b).Sum();
+                }
+            }
+
+            return res;
         }
         #endregion
     }
