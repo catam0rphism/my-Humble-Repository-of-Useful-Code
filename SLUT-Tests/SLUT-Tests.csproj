@@ -55,7 +55,10 @@
     <Compile Include="ExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Utilits\SLUT.csproj">
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SLUT\SLUT.csproj">
       <Project>{33dfee9b-89b3-46d6-8845-8b13e9d9d27d}</Project>
       <Name>SLUT</Name>
     </ProjectReference>
