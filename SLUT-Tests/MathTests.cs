@@ -8,6 +8,7 @@ namespace SLUT_Tests
     [TestClass]
     public class MathTests
     {
+        #region constructor tests
         [TestMethod]
         public void Initialize_Matrix_using_width_height_constructor()
         {
@@ -25,7 +26,8 @@ namespace SLUT_Tests
 
             CollectionAssert.AreEqual(matrix_data, m.GetArray());
         }
-
+        #endregion
+        #region row and column tests
         [TestMethod]
         public void Get_matrix_column_and_row()
         {
@@ -36,6 +38,21 @@ namespace SLUT_Tests
             CollectionAssert.AreEqual(new double[] { 2, 5 }, matrix.GetColumn(2).ToArray());
         }
 
+        [TestMethod]
+        public void Swich_matrix_columns_and_rows()
+        {
+            Matrix matrix = new Matrix(new double[2, 3] { { 1, 2, 3 }, 
+                                                          { 4, 5, 6 } });
+
+            matrix.SwitchColumns(1, 2);
+
+            CollectionAssert.AreEqual(new double[,] { { 2, 1, 3 }, { 5, 4, 6 } }, matrix.GetArray());
+
+            matrix.SwitchRows(1, 2);
+
+            CollectionAssert.AreEqual(new double[,] { { 5, 4, 6 }, { 2, 1, 3 } }, matrix.GetArray());
+        }
+        #endregion
         [TestMethod]
         public void Get_matrix_element_by_index()
         {
@@ -106,6 +123,18 @@ namespace SLUT_Tests
             var res = new double[,] { { 7, 10 }, { 14, 20 } };
 
             CollectionAssert.AreEqual(res, m3.GetArray());
+        }
+
+        [TestMethod]
+        public void Multiple_matrix_and_number()
+        {
+            Matrix m = new Matrix(new double[,] { { 5, 4, 3 }, 
+                                                  { 4, 3, 5 } });
+
+            m *= 10;
+
+            CollectionAssert.AreEqual(new double[,] { { 50, 40, 30 }, { 40, 30, 50 } }, m.GetArray());
+
         }
     }
 }

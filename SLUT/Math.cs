@@ -34,19 +34,20 @@ namespace SLUT
         /// </summary>
         /// <returns>Двумерный массив эквавалентый этой матрице</returns>
         public double[,] GetArray()
-        {
+        { 
             return matrix;
         }
+        // TODO: Прямое и непрямое(?) приведение к double[,]
         
         /// 1 2 3
         /// 4 5 6
         /// element [1,0] == 4
         /// element [0,2] == 3
         /// TODO: Make test )
-        public double this[int h,int w]
+        public double this[int row_index,int column_index]
         {
-            get {return matrix[h,w];}
-            set {matrix[h,w] = value;}
+            get {return matrix[row_index,column_index];}
+            set {matrix[row_index,column_index] = value;}
         }
         // Внимание! не путать столбцы (h) и строки (w)
 
@@ -66,28 +67,67 @@ namespace SLUT
             get { return matrix.GetLength(0); }
         }
 
-        public IEnumerable<double> GetColumn(int n)
+        public IEnumerable<double> GetColumn(int column)
         {
-            n -= 1; // n - не индекс а номер ( n=1 -> n=0 )
+            column -= 1; // n - не индекс а номер ( n=1 -> n=0 )
             for (int i = 0; i < Height; i++)
             {
-                yield return matrix[i, n];
+                yield return matrix[i, column];
             }
             yield break;
         }
-        public IEnumerable<double> GetRow(int n)
+        public IEnumerable<double> GetRow(int row)
         {
-            n -= 1; // n - не индекс а номер ( n=1 -> n=0 )
+            row -= 1; // n - не индекс а номер ( n=1 -> n=0 )
             for (int i = 0; i < Width; i++)
             {
-                yield return matrix[n, i];
+                yield return matrix[row, i];
             }
             yield break;
         }
-        
+
+        /// <summary>
+        /// Переставляет 2 строки матрицы
+        /// </summary>
+        /// <param name="row1">Номер первой строки</param>
+        /// <param name="row2">Номер второй строки</param>
+        public void SwitchRows(int row1, int row2)
+        {
+            row1--; row2--;
+            for (int i = 0; i < Width; i++)
+            {
+                double swap_var = matrix[row1, i];
+                matrix[row1, i] = matrix[row2, i];
+                matrix[row2, i] = swap_var;
+            }
+        }
+        /// <summary>
+        /// Переставляет 2 столбца матрицы
+        /// </summary>
+        /// <param name="column1">Номер первого столбца</param>
+        /// <param name="column2">Номер второго столбца</param>
+        public void SwitchColumns(int column1,int column2)
+        {
+            column1--; column2--;
+            for (int i = 0; i < Height; i++)
+            {
+                double swap_var = matrix[i, column1];
+                matrix[i, column1] = matrix[i, column2];
+                matrix[i, column2] = swap_var;
+            }
+        }
+
+        public void MultiplicateRow(int row,double k)
+        {
+            row--;
+            for (int i = 0; i < Width; i++)
+            {
+                matrix[row, i] *= k;
+            }
+        }
+
         private double[,] matrix;
 
-        // TODO: Функции высшего порядка для матриц, реализация операций через них
         #region operators
         public static Matrix operator +(Matrix matrix1, Matrix matrix2)
         {
