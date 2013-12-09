@@ -38,7 +38,7 @@ namespace SLUT
             if (m1.Height != m2.Height || m1.Width != m2.Width)
                 throw new ArgumentException("Матрицы разного размера");
 
-            Matrix m3 = new Matrix(m1.Width, m1.Height);
+            Matrix m3 = new Matrix(m1.Height,m1.Width);
             for (int w = 0; w < m1.Width; w++)
             {
                 for (int h = 0; h < m1.Height; h++)
