@@ -44,13 +44,28 @@ namespace SLUT_Tests
             Matrix matrix = new Matrix(new double[2, 3] { { 1, 2, 3 }, 
                                                           { 4, 5, 6 } });
 
-            matrix.SwitchColumns(1, 2);
+            matrix.SwitchColumn(1, 2);
 
             CollectionAssert.AreEqual(new double[,] { { 2, 1, 3 }, { 5, 4, 6 } }, matrix.GetArray());
 
-            matrix.SwitchRows(1, 2);
+            matrix.SwitchRow(1, 2);
 
             CollectionAssert.AreEqual(new double[,] { { 5, 4, 6 }, { 2, 1, 3 } }, matrix.GetArray());
+        }
+
+        [TestMethod]
+        public void Multiplicate_columns_and_rows()
+        {
+            Matrix matrix = new Matrix(new double[2, 3] { { 1, 2, 3 }, 
+                                                          { 4, 5, 6 } });
+
+            matrix.MultiplicateColumn(1, 2);
+
+            CollectionAssert.AreEqual(new double[,] { { 2, 2, 3 }, { 8, 5, 6 } },matrix.GetArray());
+
+            matrix.MultiplicateRow(2, 3);
+
+            CollectionAssert.AreEqual(new double[,] { { 2, 2, 3 }, { 24, 15, 18 } }, matrix.GetArray());
         }
         #endregion
         #region operators and indexator tests

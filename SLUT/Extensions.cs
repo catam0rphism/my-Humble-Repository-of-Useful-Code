@@ -52,18 +52,18 @@ namespace SLUT
         public static Matrix ColumnMap(this Matrix m, int column_num, Func<double, double> f)
         {
             column_num--;
-            for (int w = 0; w < m.Width; w++)
+            for (int row = 0; row < m.Height; row++)
             {
-                m[column_num, w] = f(m[column_num, w]); 
+                m[row,column_num] = f(m[row,column_num]); 
             }
             return m;
         }
         public static Matrix RowMap(this Matrix m, int row_num, Func<double, double> f)
         {
             row_num--;
-            for (int column = 0; column < m.Height; column++)
+            for (int w = 0; w < m.Width; w++)
             {
-                m[row_num, column] = f(m[row_num, column]);
+                m[row_num, w] = f(m[row_num, w]);
             }
             return m;
         }

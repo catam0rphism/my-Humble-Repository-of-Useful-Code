@@ -91,7 +91,7 @@ namespace SLUT
         /// </summary>
         /// <param name="row1">Номер первой строки</param>
         /// <param name="row2">Номер второй строки</param>
-        public void SwitchRows(int row1, int row2)
+        public void SwitchRow(int row1, int row2)
         {
             row1--; row2--;
             for (int i = 0; i < Width; i++)
@@ -106,7 +106,7 @@ namespace SLUT
         /// </summary>
         /// <param name="column1">Номер первого столбца</param>
         /// <param name="column2">Номер второго столбца</param>
-        public void SwitchColumns(int column1,int column2)
+        public void SwitchColumn(int column1,int column2)
         {
             column1--; column2--;
             for (int i = 0; i < Height; i++)
@@ -119,10 +119,37 @@ namespace SLUT
 
         public void MultiplicateRow(int row,double k)
         {
-            row--;
+            this.RowMap(row, a => a * k);
+        }
+        public void MultiplicateColumn(int column, double k)
+        {
+            this.ColumnMap(column, a => a * k);
+        }
+
+        /// <summary>
+        /// Складывает 2 строки матрицы
+        /// </summary>
+        /// <param name="row1">Строка, к которой плюсуют другую</param>
+        /// <param name="row2">Прибавляемая строка</param>
+        public void AddRow(int row1, int row2)
+        {
+            row2--; row1--;
+            for (int i = 0; i < Height; i++)
+            {
+                matrix[row1, i] += matrix[row2, i];
+            }
+        }
+        /// <summary>
+        /// Складывает 2 столбца матрицы
+        /// </summary>
+        /// <param name="column1">Столбец к которому прибарляют</param>
+        /// <param name="column2">Прибавляемый столбец</param>
+        public void AddColumn(int column1, int column2)
+        {
+            column1--; column2--;
             for (int i = 0; i < Width; i++)
             {
-                matrix[row, i] *= k;
+                matrix[i, column1] += matrix[i, column2];
             }
         }
 
