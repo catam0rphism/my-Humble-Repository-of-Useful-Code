@@ -48,6 +48,25 @@ namespace SLUT
             }
             return m3;
         }
+
+        public static Matrix ColumnMap(this Matrix m, int column_num, Func<double, double> f)
+        {
+            column_num--;
+            for (int w = 0; w < m.Width; w++)
+            {
+                m[column_num, w] = f(m[column_num, w]); 
+            }
+            return m;
+        }
+        public static Matrix RowMap(this Matrix m, int row_num, Func<double, double> f)
+        {
+            row_num--;
+            for (int column = 0; column < m.Height; column++)
+            {
+                m[row_num, column] = f(m[row_num, column]);
+            }
+            return m;
+        }
         #endregion
     }
 }

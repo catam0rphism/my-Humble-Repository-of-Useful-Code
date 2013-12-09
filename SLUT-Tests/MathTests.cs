@@ -53,6 +53,7 @@ namespace SLUT_Tests
             CollectionAssert.AreEqual(new double[,] { { 5, 4, 6 }, { 2, 1, 3 } }, matrix.GetArray());
         }
         #endregion
+        #region operators and indexator tests
         [TestMethod]
         public void Get_matrix_element_by_index()
         {
@@ -136,5 +137,6 @@ namespace SLUT_Tests
             CollectionAssert.AreEqual(new double[,] { { 50, 40, 30 }, { 40, 30, 50 } }, m.GetArray());
 
         }
+        #endregion
     }
 }
