@@ -23,17 +23,17 @@ namespace SLUT
         #region Higher-order functions
         public static Matrix Map(this Matrix m, Func<double, double> f)
         {
+            Matrix m2 = new Matrix(m.Height, m.Width);
             for (int w = 0; w < m.Width; w++)
             {
                 for (int h = 0; h < m.Height; h++)
                 {
-                    m[h, w] = f(m[h, w]);
+                    m2[h, w] = f(m[h, w]);
                 }
             }
-            return m;
+            return m2;
         }
-
-        public static Matrix Map2(this Matrix m1, Matrix m2, Func<double, double, double> f)
+        public static Matrix Map2(this Matrix m1,Matrix m2, Func<double, double, double> f)
         {
             if (m1.Height != m2.Height || m1.Width != m2.Width)
                 throw new ArgumentException("Матрицы разного размера");

@@ -91,58 +91,17 @@ namespace SLUT
         #region operators
         public static Matrix operator +(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.Width != matrix2.Width || matrix2.Height != matrix1.Height)
-                throw new ArgumentException("Матрицы разного размера");
-
-            int h = matrix1.Height;
-            int w = matrix1.Width;
-
-            Matrix m = new Matrix(h, w);
-
-            for (int i = 0; i < h; i++)
-            {
-                for (int j = 0; j < w; j++)
-                {
-                    m[i, j] = matrix1[i, j] + matrix2[i, j];
-                }
-            }
-
+            Matrix m = matrix1.Map2(matrix2, (a, b) => a + b);
             return m;
         }
         public static Matrix operator -(Matrix matrix1, Matrix matrix2)
         {
-            if (matrix1.Width != matrix2.Width || matrix2.Height != matrix1.Height)
-                throw new ArgumentException("Матрицы разного размера");
-
-            int h = matrix1.Height;
-            int w = matrix1.Width;
-
-            Matrix m = new Matrix(h, w);
-
-            for (int i = 0; i < h; i++)
-            {
-                for (int j = 0; j < w; j++)
-                {
-                    m[i, j] = matrix1[i, j] - matrix2[i, j];
-                }
-            }
-
+            Matrix m = matrix1.Map2(matrix2, (a, b) => a - b);
             return m;
         }
         public static Matrix operator *(Matrix m, double k)
         {
-            // add IClonabe interface implementation
-            // and change this to "m.Clone()"
-            Matrix res = new Matrix(m.Height,m.Width);
-
-            for (int i = 0; i < m.Width; i++)
-            {
-                for (int j = 0; j < m.Height; j++)
-                {
-                    res[j, i] = m[j, i] * k;
-                }
-            }
-
+            Matrix res = m.Map(a => a * k);
             return res;
             
         }
