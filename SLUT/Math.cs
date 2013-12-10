@@ -131,12 +131,12 @@ namespace SLUT
         /// </summary>
         /// <param name="row1">Строка, к которой плюсуют другую</param>
         /// <param name="row2">Прибавляемая строка</param>
-        public void AddRow(int row1, int row2)
+        public void AddRow(int row1, int row2,double k = 1)
         {
             row2--; row1--;
             for (int i = 0; i < Height; i++)
             {
-                matrix[row1, i] += matrix[row2, i];
+                matrix[row1, i] += matrix[row2, i] * k;
             }
         }
         /// <summary>
@@ -144,12 +144,26 @@ namespace SLUT
         /// </summary>
         /// <param name="column1">Столбец к которому прибарляют</param>
         /// <param name="column2">Прибавляемый столбец</param>
-        public void AddColumn(int column1, int column2)
+        public void AddColumn(int column1, int column2,double k = 1)
         {
             column1--; column2--;
             for (int i = 0; i < Width; i++)
             {
-                matrix[i, column1] += matrix[i, column2];
+                matrix[i, column1] += matrix[i, column2] * k;
+            }
+        }
+
+        public void TransformToTringularForm()
+        {
+            for (int k = 1; k < Height; k++)
+            {
+                for (int i = k+1; i <= Height; i++)
+                {
+                    // хз что делать при делении на 0
+                    if (this[k - 1, k - 1] == 0) throw new DivideByZeroException();
+
+                    AddRow(i, k, -this[i - 1, k-1] / this[k-1, k-1]);
+                }
             }
         }
 
@@ -198,5 +212,21 @@ namespace SLUT
             return res;
         }
         #endregion
+
+        /// <summary>
+        /// Расчет определителя. В ходе расчета матрица приводится к треугольной!
+        /// </summary>
+        /// <returns></returns>
+        public double Determinant()
+        {
+            // TODO: исправить
+            TransformToTringularForm();
+            double res = 1;
+            for (int i = 0; i < Width; i++)
+            {
+                res*=this[i,i];
+            }
+            return res;
+        }
     }
 }

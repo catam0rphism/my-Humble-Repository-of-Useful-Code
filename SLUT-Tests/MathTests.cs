@@ -153,5 +153,26 @@ namespace SLUT_Tests
 
         }
         #endregion
+        [TestMethod]
+        public void Transform_to_tringular_matrix()
+        {
+            Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
+
+            m.TransformToTringularForm();
+
+            CollectionAssert.AreEqual(new double[,] { { 1, 2, 3 }, { 0, -3, -6 }, { 0, 0, 0 } }, m.GetArray());
+        }
+        [TestMethod]
+        public void Get_tringular_matrix_determinant()
+        {
+            Matrix m = new Matrix(new double[,] 
+            { { -1, 2, -3 }, 
+              { 4, -5, 6 }, 
+              { -7, 8, 9 } });
+
+            var res = m.Determinant();
+
+            Assert.AreEqual(res, -54);
+        }
     }
 }
