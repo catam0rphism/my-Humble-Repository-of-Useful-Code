@@ -67,6 +67,23 @@ namespace SLUT
             }
             return m;
         }
+
+        /// <summary>
+        /// signature f: row_num column_num value -> f(...)
+        /// </summary>
+        public static Matrix Map(this Matrix m, Func<int, int, double, double> f)
+        {
+            /// f: row_num column_num value -> f(...)
+
+            for (int i = 0; i < m.Width; i++)
+            {
+                for (int j = 0; j < m.Height; j++)
+                {
+                    m[j, i] = f(j, i, m[j, i]);
+                }
+            }
+            return m;
+        }
         #endregion
     }
 }
