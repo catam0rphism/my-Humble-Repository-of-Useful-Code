@@ -4,5 +4,10 @@ SLUT - Small Library of Useful Things
 
 ----------------------------------------------
 Extensions class
-  contains extension methods for IEnumerable collections
+  contains extension methods for IEnumerable collections and other classes.
+----------------------------------------------
+
+----------------------------------------------
+Matrix class
+  represent matrix and contains methods for working with them
 ----------------------------------------------
