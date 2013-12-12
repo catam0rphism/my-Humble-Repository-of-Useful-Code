@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SLUT;
+using SLUT.Math;
 using System.Linq;
 
 namespace SLUT_Tests
@@ -90,7 +90,7 @@ namespace SLUT_Tests
 
             Matrix m3 = m1 + m2;
 
-            CollectionAssert.AreEqual(new double[,] { { 3, 4, 4 }, { 4, 5, 5 } }, m3.GetArray());
+            CollectionAssert.AreEqual(new double[,] { { 3, 4, 4 }, { 4, 5, 5 } }, (double[,])m3);
 
         }
 

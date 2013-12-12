@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SLUT
+namespace SLUT.Math
 {
     public class Matrix
+        :ICloneable
     {
         #region Constructors
         /// <summary>
@@ -37,49 +38,60 @@ namespace SLUT
         { 
             return matrix;
         }
-        // TODO: Прямое и непрямое(?) приведение к double[,]
-        
-        /// 1 2 3
-        /// 4 5 6
-        /// element [1,0] == 4
-        /// element [0,2] == 3
-        /// TODO: Make test )
+        public static implicit operator double[,](Matrix m)
+        {
+            return m.GetArray();
+        }
+        /// <summary>
+        /// Задает или возвращает элемент матрицы
+        /// </summary>
+        /// <param name="row_index">Индекс строки</param>
+        /// <param name="column_index">Индекс столбца</param>
+        /// <returns>Элемент матрицы, занимающий данную позицию</returns>
         public double this[int row_index,int column_index]
         {
             get {return matrix[row_index,column_index];}
             set {matrix[row_index,column_index] = value;}
         }
-        // Внимание! не путать столбцы (h) и строки (w)
 
         /// <summary>
-        /// Ширина матрицы (длина каждой строки)
+        /// Возвращает число столбцов матрицы
         /// </summary>
-        public int Width
+        public int ColumnCount
         {
             get { return matrix.GetLength(1); }
         }
-
         /// <summary>
-        /// Высота матрицы (длина каждого столбца)
+        /// Возвращает число строк матрицы
         /// </summary>
-        public int Height
+        public int RowCount
         {
             get { return matrix.GetLength(0); }
         }
 
+        /// <summary>
+        /// Формирует список из элементов колонки матрицы
+        /// </summary>
+        /// <param name="column">Номер колонки</param>
+        /// <returns>Список элементов строки</returns>
         public IEnumerable<double> GetColumn(int column)
         {
-            column -= 1; // n - не индекс а номер ( n=1 -> n=0 )
-            for (int i = 0; i < Height; i++)
+            column--; // n - не индекс а номер ( n=1 -> n=0 )
+            for (int i = 0; i < RowCount; i++)
             {
                 yield return matrix[i, column];
             }
             yield break;
         }
+        /// <summary>
+        /// Формирует список элементов строки матрицы
+        /// </summary>
+        /// <param name="row">Номер строки</param>
+        /// <returns>Список элементов строки</returns>
         public IEnumerable<double> GetRow(int row)
         {
             row -= 1; // n - не индекс а номер ( n=1 -> n=0 )
-            for (int i = 0; i < Width; i++)
+            for (int i = 0; i < ColumnCount; i++)
             {
                 yield return matrix[row, i];
             }
@@ -91,39 +103,52 @@ namespace SLUT
         /// </summary>
         /// <param name="row1">Номер первой строки</param>
         /// <param name="row2">Номер второй строки</param>
-        public void SwitchRow(int row1, int row2)
+        public Matrix SwitchRow(int row1, int row2)
         {
             row1--; row2--;
-            for (int i = 0; i < Width; i++)
+            for (int i = 0; i < ColumnCount; i++)
             {
                 double swap_var = matrix[row1, i];
                 matrix[row1, i] = matrix[row2, i];
                 matrix[row2, i] = swap_var;
             }
+            return this;
         }
         /// <summary>
         /// Переставляет 2 столбца матрицы
         /// </summary>
         /// <param name="column1">Номер первого столбца</param>
         /// <param name="column2">Номер второго столбца</param>
-        public void SwitchColumn(int column1,int column2)
+        public Matrix SwitchColumn(int column1,int column2)
         {
             column1--; column2--;
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < RowCount; i++)
             {
                 double swap_var = matrix[i, column1];
                 matrix[i, column1] = matrix[i, column2];
                 matrix[i, column2] = swap_var;
             }
+            return this;
         }
-
-        public void MultiplicateRow(int row,double k)
+        /// <summary>
+        /// Умножает на константу элементы одной из строк матрицы
+        /// </summary>
+        /// <param name="row">Номер строки</param>
+        /// <param name="k">Константа</param>
+        /// <returns></returns>
+        public Matrix MultiplicateRow(int row, double k)
         {
-            this.RowMap(row, a => a * k);
+            return this.RowMap(row, a => a * k);
         }
-        public void MultiplicateColumn(int column, double k)
+        /// <summary>
+        /// Умножает на константу элементы одного из столбцов
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        public Matrix MultiplicateColumn(int column, double k)
         {
-            this.ColumnMap(column, a => a * k);
+            return this.ColumnMap(column, a => a * k);
         }
 
         /// <summary>
@@ -131,33 +156,41 @@ namespace SLUT
         /// </summary>
         /// <param name="row1">Строка, к которой плюсуют другую</param>
         /// <param name="row2">Прибавляемая строка</param>
-        public void AddRow(int row1, int row2,double k = 1)
+        /// <param name="k">Коэфициент, на который умножается вторая строка</param>
+        public Matrix AddRow(int row1, int row2,double k = 1)
         {
             row2--; row1--;
-            for (int i = 0; i < Height; i++)
+            for (int i = 0; i < RowCount; i++)
             {
                 matrix[row1, i] += matrix[row2, i] * k;
             }
+            return this;
         }
         /// <summary>
         /// Складывает 2 столбца матрицы
         /// </summary>
         /// <param name="column1">Столбец к которому прибарляют</param>
         /// <param name="column2">Прибавляемый столбец</param>
-        public void AddColumn(int column1, int column2,double k = 1)
+        /// <param name="k">Коэфициент, на который умножается вторая строка</param>
+        public Matrix AddColumn(int column1, int column2,double k = 1)
         {
+            // it's so bad!
             column1--; column2--;
-            for (int i = 0; i < Width; i++)
+
+            for (int i = 0; i < ColumnCount; i++)
             {
                 matrix[i, column1] += matrix[i, column2] * k;
             }
+            return this;
         }
-
-        public void TransformToTringularForm()
+        /// <summary>
+        /// Приводит матрицу к треугольному виду
+        /// </summary>
+        public Matrix ToTringularForm()
         {
-            for (int k = 1; k < Height; k++)
+            for (int k = 1; k < RowCount; k++)
             {
-                for (int i = k+1; i <= Height; i++)
+                for (int i = k+1; i <= RowCount; i++)
                 {
                     // хз что делать при делении на 0
                     if (this[k - 1, k - 1] == 0) throw new DivideByZeroException();
@@ -165,6 +198,8 @@ namespace SLUT
                     AddRow(i, k, -this[i - 1, k-1] / this[k-1, k-1]);
                 }
             }
+
+            return this;
         }
 
         private double[,] matrix;
@@ -188,12 +223,12 @@ namespace SLUT
         }
         public static Matrix operator *(Matrix m1, Matrix m2)
         {
-            if (m1.Width != m2.Height)
+            if (m1.RowCount != m2.ColumnCount)
                 throw new ArgumentException("Форма матриц не согласована");
             
             int res_w, res_h;
-            res_w = m2.Width;
-            res_h = m1.Height;
+            res_w = m2.ColumnCount;
+            res_h = m1.RowCount;
 
             Matrix res = new Matrix(res_h,res_w);
 
@@ -219,14 +254,24 @@ namespace SLUT
         /// <returns></returns>
         public double Determinant()
         {
+            Matrix m = (Matrix)Clone();
             // TODO: исправить
-            TransformToTringularForm();
+            m.ToTringularForm();
             double res = 1;
-            for (int i = 0; i < Width; i++)
+            for (int i = 0; i < ColumnCount; i++)
             {
                 res*=this[i,i];
             }
             return res;
+        }
+
+        /// <summary>
+        /// Создает копию текущего экземпляра
+        /// </summary>
+        public object Clone()
+        {
+            double[,] m = (double[,])GetArray().Clone();
+            return new Matrix(m);
         }
     }
 }

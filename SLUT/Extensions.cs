@@ -8,7 +8,7 @@ namespace SLUT
 {
     public static class Extensions
     {
-        public static void ForEach<T>(this IEnumerable<T> source,Action<T> func)
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> func)
         {
             foreach (T item in source)
             {
@@ -18,72 +18,107 @@ namespace SLUT
 
     }
 
-    public static class MatrixExtensions
+    namespace Math
     {
-        #region Higher-order functions
-        public static Matrix Map(this Matrix m, Func<double, double> f)
+        public static class MatrixExtensions
         {
-            Matrix m2 = new Matrix(m.Height, m.Width);
-            for (int w = 0; w < m.Width; w++)
+            #region Higher-order functions
+            /// <summary>
+            /// Проецирует каждый элемент на новую матрицу
+            /// </summary>
+            /// <param name="m">Исходная матрица</param>
+            /// <param name="f">Функция преобразования</param>
+            /// <returns></returns>
+            public static Matrix Map(this Matrix m, Func<double, double> f)
             {
-                for (int h = 0; h < m.Height; h++)
+                Matrix m2 = new Matrix(m.RowCount, m.ColumnCount);
+                for (int w = 0; w < m.ColumnCount; w++)
                 {
-                    m2[h, w] = f(m[h, w]);
+                    for (int h = 0; h < m.RowCount; h++)
+                    {
+                        m2[h, w] = f(m[h, w]);
+                    }
                 }
+                return m2;
             }
-            return m2;
-        }
-        public static Matrix Map2(this Matrix m1,Matrix m2, Func<double, double, double> f)
-        {
-            if (m1.Height != m2.Height || m1.Width != m2.Width)
-                throw new ArgumentException("Матрицы разного размера");
-
-            Matrix m3 = new Matrix(m1.Height,m1.Width);
-            for (int w = 0; w < m1.Width; w++)
+            /// <summary>
+            /// Проецирует каждый элемент на новую матрицу
+            /// </summary>
+            /// <param name="m">Исходная матрица</param>
+            /// <param name="f">Функция преобразования, использующая индексы элемента</param>
+            /// <returns></returns>
+            public static Matrix Map(this Matrix m, Func<int, int, double, double> f)
             {
-                for (int h = 0; h < m1.Height; h++)
+                /// f: row_num column_num value -> f(...)
+                m = (Matrix)m.Clone();
+                for (int i = 0; i < m.ColumnCount; i++)
                 {
-                    m3[h, w] = f(m1[h, w], m2[h, w]);
+                    for (int j = 0; j < m.RowCount; j++)
+                    {
+                        m[j, i] = f(j, i, m[j, i]);
+                    }
                 }
+                return m;
             }
-            return m3;
-        }
-
-        public static Matrix ColumnMap(this Matrix m, int column_num, Func<double, double> f)
-        {
-            column_num--;
-            for (int row = 0; row < m.Height; row++)
+            /// <summary>
+            /// Создает носую матрицу на основе двух других
+            /// последовательным применением функции
+            /// </summary>
+            /// <param name="m1">Первая матрица</param>
+            /// <param name="m2">Вторая матрица</param>
+            /// <param name="f">Функция преобразования</param>
+            /// <returns></returns>
+            public static Matrix Map2(this Matrix m1, Matrix m2, Func<double, double, double> f)
             {
-                m[row,column_num] = f(m[row,column_num]); 
-            }
-            return m;
-        }
-        public static Matrix RowMap(this Matrix m, int row_num, Func<double, double> f)
-        {
-            row_num--;
-            for (int w = 0; w < m.Width; w++)
-            {
-                m[row_num, w] = f(m[row_num, w]);
-            }
-            return m;
-        }
+                if (m1.RowCount != m2.RowCount || m1.ColumnCount != m2.ColumnCount)
+                    throw new ArgumentException("Матрицы разного размера");
 
-        /// <summary>
-        /// signature f: row_num column_num value -> f(...)
-        /// </summary>
-        public static Matrix Map(this Matrix m, Func<int, int, double, double> f)
-        {
-            /// f: row_num column_num value -> f(...)
-
-            for (int i = 0; i < m.Width; i++)
-            {
-                for (int j = 0; j < m.Height; j++)
+                Matrix m3 = new Matrix(m1.RowCount, m1.ColumnCount);
+                for (int w = 0; w < m1.ColumnCount; w++)
                 {
-                    m[j, i] = f(j, i, m[j, i]);
+                    for (int h = 0; h < m1.RowCount; h++)
+                    {
+                        m3[h, w] = f(m1[h, w], m2[h, w]);
+                    }
                 }
+                return m3;
             }
-            return m;
+            /// <summary>
+            /// Применяет к каждуму элементу одного столбца функцию
+            /// </summary>
+            /// <param name="m">Исходная матрица</param>
+            /// <param name="row_num">Номер изменяемого столбца</param>
+            /// <param name="f">Функция, применяемая для отображения элемента</param>
+            /// <returns></returns>
+            public static Matrix ColumnMap(this Matrix m, int column_num, Func<double, double> f)
+            {
+                m = (Matrix)m.Clone();
+
+                column_num--;
+                for (int row = 0; row < m.RowCount; row++)
+                {
+                    m[row, column_num] = f(m[row, column_num]);
+                }
+                return m;
+            }
+            /// <summary>
+            /// Применяет к каждуму элементу одной строки функцию
+            /// </summary>
+            /// <param name="m">Исходная матрица</param>
+            /// <param name="row_num">Номер изменяемой строки</param>
+            /// <param name="f">Функция, применяемая для отображения элемента</param>
+            /// <returns></returns>
+            public static Matrix RowMap(this Matrix m, int row_num, Func<double, double> f)
+            {
+                m = (Matrix)m.Clone();
+                row_num--;
+                for (int w = 0; w < m.ColumnCount; w++)
+                {
+                    m[row_num, w] = f(m[row_num, w]);
+                }
+                return m;
+            }
+            #endregion
         }
-        #endregion
     }
 }
