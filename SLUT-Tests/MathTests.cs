@@ -59,11 +59,11 @@ namespace SLUT_Tests
             Matrix matrix = new Matrix(new double[2, 3] { { 1, 2, 3 }, 
                                                           { 4, 5, 6 } });
 
-            matrix.MultiplicateColumn(1, 2);
+            matrix = matrix.MultiplicateColumn(1, 2);
 
             CollectionAssert.AreEqual(new double[,] { { 2, 2, 3 }, { 8, 5, 6 } },matrix.GetArray());
 
-            matrix.MultiplicateRow(2, 3);
+            matrix = matrix.MultiplicateRow(2, 3);
 
             CollectionAssert.AreEqual(new double[,] { { 2, 2, 3 }, { 24, 15, 18 } }, matrix.GetArray());
         }
@@ -158,7 +158,7 @@ namespace SLUT_Tests
         {
             Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
 
-            m.TransformToTringularForm();
+            m.ToTringularForm();
 
             CollectionAssert.AreEqual(new double[,] { { 1, 2, 3 }, { 0, -3, -6 }, { 0, 0, 0 } }, m.GetArray());
         }

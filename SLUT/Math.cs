@@ -190,7 +190,7 @@ namespace SLUT.Math
         {
             for (int k = 1; k < RowCount; k++)
             {
-                for (int i = k+1; i <= RowCount; i++)
+                for (int i = k+1; i <= ColumnCount; i++)
                 {
                     // хз что делать при делении на 0
                     if (this[k - 1, k - 1] == 0) throw new DivideByZeroException();
@@ -256,11 +256,11 @@ namespace SLUT.Math
         {
             Matrix m = (Matrix)Clone();
             // TODO: исправить
-            m.ToTringularForm();
+            m = m.ToTringularForm();
             double res = 1;
             for (int i = 0; i < ColumnCount; i++)
             {
-                res*=this[i,i];
+                res*=m[i,i];
             }
             return res;
         }
