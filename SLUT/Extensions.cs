@@ -32,9 +32,9 @@ namespace SLUT
             public static Matrix Map(this Matrix m, Func<double, double> f)
             {
                 Matrix m2 = new Matrix(m.RowCount, m.ColumnCount);
-                for (int w = 0; w < m.ColumnCount; w++)
+                for (int w = 1; w <= m.ColumnCount; w++)
                 {
-                    for (int h = 0; h < m.RowCount; h++)
+                    for (int h = 1; h <= m.RowCount; h++)
                     {
                         m2[h, w] = f(m[h, w]);
                     }
@@ -51,9 +51,9 @@ namespace SLUT
             {
                 /// f: row_num column_num value -> f(...)
                 m = (Matrix)m.Clone();
-                for (int i = 0; i < m.ColumnCount; i++)
+                for (int i = 1; i <= m.ColumnCount; i++)
                 {
-                    for (int j = 0; j < m.RowCount; j++)
+                    for (int j = 1; j <= m.RowCount; j++)
                     {
                         m[j, i] = f(j, i, m[j, i]);
                     }
@@ -74,9 +74,9 @@ namespace SLUT
                     throw new ArgumentException("Матрицы разного размера");
 
                 Matrix m3 = new Matrix(m1.RowCount, m1.ColumnCount);
-                for (int w = 0; w < m1.ColumnCount; w++)
+                for (int w = 1; w <= m1.ColumnCount; w++)
                 {
-                    for (int h = 0; h < m1.RowCount; h++)
+                    for (int h = 1; h <= m1.RowCount; h++)
                     {
                         m3[h, w] = f(m1[h, w], m2[h, w]);
                     }
@@ -94,8 +94,7 @@ namespace SLUT
             {
                 m = (Matrix)m.Clone();
 
-                column_num--;
-                for (int row = 0; row < m.RowCount; row++)
+                for (int row = 1; row <= m.RowCount; row++)
                 {
                     m[row, column_num] = f(m[row, column_num]);
                 }
@@ -111,8 +110,7 @@ namespace SLUT
             public static Matrix RowMap(this Matrix m, int row_num, Func<double, double> f)
             {
                 m = (Matrix)m.Clone();
-                row_num--;
-                for (int w = 0; w < m.ColumnCount; w++)
+                for (int w = 1; w <= m.ColumnCount; w++)
                 {
                     m[row_num, w] = f(m[row_num, w]);
                 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,10 +49,10 @@ namespace SLUT.Math
         /// <param name="row_index">Индекс строки</param>
         /// <param name="column_index">Индекс столбца</param>
         /// <returns>Элемент матрицы, занимающий данную позицию</returns>
-        public double this[int row_index,int column_index]
+        public double this[int row_number, int column_number]
         {
-            get {return matrix[row_index,column_index];}
-            set {matrix[row_index,column_index] = value;}
+            get { return matrix[row_number - 1, column_number - 1]; }
+            set { matrix[row_number - 1, column_number - 1] = value; }
         }
 
         /// <summary>
@@ -76,10 +77,9 @@ namespace SLUT.Math
         /// <returns>Список элементов строки</returns>
         public IEnumerable<double> GetColumn(int column)
         {
-            column--; // n - не индекс а номер ( n=1 -> n=0 )
-            for (int i = 0; i < RowCount; i++)
+            for (int row = 1; row <= RowCount; row++)
             {
-                yield return matrix[i, column];
+                yield return this[row, column];
             }
             yield break;
         }
@@ -90,10 +90,9 @@ namespace SLUT.Math
         /// <returns>Список элементов строки</returns>
         public IEnumerable<double> GetRow(int row)
         {
-            row -= 1; // n - не индекс а номер ( n=1 -> n=0 )
-            for (int i = 0; i < ColumnCount; i++)
+            for (int column = 1; column <= ColumnCount; column++)
             {
-                yield return matrix[row, i];
+                yield return this[row, column];
             }
             yield break;
         }
@@ -105,12 +104,11 @@ namespace SLUT.Math
         /// <param name="row2">Номер второй строки</param>
         public Matrix SwitchRow(int row1, int row2)
         {
-            row1--; row2--;
-            for (int i = 0; i < ColumnCount; i++)
+            for (int i = 1; i <= ColumnCount; i++)
             {
-                double swap_var = matrix[row1, i];
-                matrix[row1, i] = matrix[row2, i];
-                matrix[row2, i] = swap_var;
+                double swap_var = this[row1, i];
+                this[row1, i] = this[row2, i];
+                this[row2, i] = swap_var;
             }
             return this;
         }
@@ -121,12 +119,11 @@ namespace SLUT.Math
         /// <param name="column2">Номер второго столбца</param>
         public Matrix SwitchColumn(int column1,int column2)
         {
-            column1--; column2--;
-            for (int i = 0; i < RowCount; i++)
+            for (int i = 1; i <= RowCount; i++)
             {
-                double swap_var = matrix[i, column1];
-                matrix[i, column1] = matrix[i, column2];
-                matrix[i, column2] = swap_var;
+                double swap_var = this[i, column1];
+                this[i, column1] = this[i, column2];
+                this[i, column2] = swap_var;
             }
             return this;
         }
@@ -138,6 +135,7 @@ namespace SLUT.Math
         /// <returns></returns>
         public Matrix MultiplicateRow(int row, double k)
         {
+#warning MAP_FUNC_USE_INDEX!
             return this.RowMap(row, a => a * k);
         }
         /// <summary>
@@ -159,10 +157,9 @@ namespace SLUT.Math
         /// <param name="k">Коэфициент, на который умножается вторая строка</param>
         public Matrix AddRow(int row1, int row2,double k = 1)
         {
-            row2--; row1--;
-            for (int i = 0; i < RowCount; i++)
+            for (int column = 1; column <= ColumnCount; column++)
             {
-                matrix[row1, i] += matrix[row2, i] * k;
+                this[row1, column] += this[row2, column] * k;
             }
             return this;
         }
@@ -174,12 +171,9 @@ namespace SLUT.Math
         /// <param name="k">Коэфициент, на который умножается вторая строка</param>
         public Matrix AddColumn(int column1, int column2,double k = 1)
         {
-            // it's so bad!
-            column1--; column2--;
-
-            for (int i = 0; i < ColumnCount; i++)
+            for (int row = 1; row <= RowCount; row++)
             {
-                matrix[i, column1] += matrix[i, column2] * k;
+                this[row, column1] += this[row, column2] * k;
             }
             return this;
         }
@@ -194,8 +188,9 @@ namespace SLUT.Math
                 {
                     // хз что делать при делении на 0
                     if (this[k - 1, k - 1] == 0) throw new DivideByZeroException();
+                    // Debug.Assert(this[k, k] == 0);
 
-                    AddRow(i, k, -this[i - 1, k-1] / this[k-1, k-1]);
+                    AddRow(i+1, k+1, -this[i, k] / this[k, k]);
                 }
             }
 
@@ -232,12 +227,12 @@ namespace SLUT.Math
 
             Matrix res = new Matrix(res_h,res_w);
 
-            for (int i = 0; i < res_h; i++)
+            for (int i = 1; i <= res_h; i++)
             {
-                for (int j = 0; j < res_w; j++)
+                for (int j = 1; j <= res_w; j++)
                 {
-                    var row = m1.GetRow(i+1); // i+1 - тк GetRow() берет номер! а не индекс
-                    var column = m2.GetColumn(j+1);
+                    var row = m1.GetRow(i);
+                    var column = m2.GetColumn(j);
                     
                     // Складываем произведения соответствующих элементов
                     res[i,j] = Enumerable.Zip(row, column, (a, b) => a * b).Sum();

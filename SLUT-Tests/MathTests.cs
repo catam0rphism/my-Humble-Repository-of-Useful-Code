@@ -67,6 +67,22 @@ namespace SLUT_Tests
 
             CollectionAssert.AreEqual(new double[,] { { 2, 2, 3 }, { 24, 15, 18 } }, matrix.GetArray());
         }
+
+        [TestMethod]
+        public void Add_column_and_row_test()
+        {
+            Matrix matrix = new Matrix(new double[2, 3] { { 1, 2, 3 }, 
+                                                          { 4, 5, 6 } });
+
+            matrix = matrix.AddRow(1, 2);
+
+            CollectionAssert.AreEqual(new double[,] { { 5, 7, 9 }, { 4, 5, 6 } }, matrix.GetArray(),"Error in AddRow()");
+
+            matrix = matrix.AddColumn(2, 3);
+
+            CollectionAssert.AreEqual(new double[,] { { 5, 16, 9 }, { 4, 11, 6 } }, matrix.GetArray());
+        }
+        
         #endregion
         #region operators and indexator tests
         [TestMethod]
@@ -75,8 +91,16 @@ namespace SLUT_Tests
             Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, 
                                                   { 4, 5, 6 } });
 
-            Assert.AreEqual(3, m[0, 2]);
-            Assert.AreEqual(5, m[1, 1]);
+            Assert.AreEqual(3, m[1, 3]);
+            Assert.AreEqual(5, m[2, 2]);
+
+            try
+            {
+                var n = m[0, 0];
+                Assert.Fail();
+            }
+            catch (IndexOutOfRangeException ex)
+            { }
         }
 
         [TestMethod]
@@ -160,7 +184,9 @@ namespace SLUT_Tests
 
             m.ToTringularForm();
 
-            CollectionAssert.AreEqual(new double[,] { { 1, 2, 3 }, { 0, -3, -6 }, { 0, 0, 0 } }, m.GetArray());
+            CollectionAssert.AreEqual(new double[,] { { 1, 2, 3 }, 
+                                                      { 0, -3, -6 }, 
+                                                      { 0, 0, 0 } }, m.GetArray());
         }
         [TestMethod]
         public void Get_tringular_matrix_determinant()
