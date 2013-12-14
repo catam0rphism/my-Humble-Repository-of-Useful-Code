@@ -23,12 +23,12 @@ namespace SLUT
         public static class MatrixExtensions
         {
             #region Higher-order functions
+            #region map functions
             /// <summary>
             /// Проецирует каждый элемент на новую матрицу
             /// </summary>
             /// <param name="m">Исходная матрица</param>
             /// <param name="f">Функция преобразования</param>
-            /// <returns></returns>
             public static Matrix Map(this Matrix m, Func<double, double> f)
             {
                 Matrix m2 = new Matrix(m.RowCount, m.ColumnCount);
@@ -115,6 +115,85 @@ namespace SLUT
                     m[row_num, w] = f(m[row_num, w]);
                 }
                 return m;
+            }
+            /// <summary>
+            /// Выполняет свертку матрицы в порядке слева направо, сверху вниз
+            /// </summary>
+            /// <param name="m">Исходная матрица</param>
+            /// <param name="seed">Начальное значение аккумулятора</param>
+            /// <param name="f">Функция свертки</param>
+            #endregion
+            public static double FoldRC(this Matrix m,double seed, Func<double, double, double> f)
+            {
+                double acc = seed;
+                for (int column_number = 1; column_number <= m.ColumnCount; column_number++)
+                {
+                    for (int row_num = 1; row_num <= m.RowCount; row_num++)
+                    {
+                        acc = f(acc, m[row_num, column_number]);
+                    }
+                }
+                return acc;
+            }
+
+            /// <summary>
+            /// Выполняет процедуру для каждого элемента матрицы
+            /// </summary>
+            /// <param name="m">Исходная матрица</param>
+            /// <param name="f">Процедура, выполняемая для каждого элемента</param>
+            public static Matrix Iter(this Matrix m, Action<int, int, double> f)
+            {
+                for (int i = 1; i <= m.ColumnCount; i++)
+                {
+                    for (int j = 1; j <= m.RowCount; j++)
+                    {
+                        f(j, i, m[j, i]);
+                    }
+                }
+                return m;
+            }
+
+            /// <summary>
+            /// Выполняет поиск максимального элемента матрицы
+            /// </summary>
+            /// <param name="m">Матрица</param>
+            static double FindMax(this Matrix m)
+            {
+                return m.FoldRC(double.MinValue, System.Math.Max);
+            }
+            /// <summary>
+            /// Выполняет поиск минимального элемента матрицы
+            /// </summary>
+            /// <param name="m">Матрица</param>
+            static double FindMin(this Matrix m)
+            {
+                return m.FoldRC(double.MaxValue, System.Math.Min);
+            }
+
+            /// <summary>
+            /// Выполняет поиск строки и столбца первого вхождения элемента
+            /// </summary>
+            /// <param name="m">Матрица</param>
+            /// <param name="el">Искомый элемент</param>
+            /// <param name="row_number">[out] Номер строки</param>
+            /// <param name="column_number">[out] Номер столбца</param>
+            /// <returns></returns>
+            static Matrix FindIndex(Matrix m, double el,out int row_number,out int column_number)
+            {
+                for (int row_num = 1; row_num <= m.RowCount; row_num++)
+                {
+                    for (int column_num = 1; column_num <= m.ColumnCount; column_num++)
+                    {
+                        if (m[row_num, column_num] == el)
+                        {
+                            row_number = row_num;
+                            column_number = column_num;
+
+                            return m;
+                        }
+                    }
+                }
+                throw new ArgumentOutOfRangeException("Матрица не содержит элемента");
             }
             #endregion
         }
