@@ -200,5 +200,16 @@ namespace SLUT_Tests
 
             Assert.AreEqual(res, -54);
         }
+
+        [TestMethod]
+        public void Transposition_Matrix()
+        {
+            Matrix m = new Matrix(
+                new double[,] { { 1, 2, 3 }, { 4, 5, 6 } });
+
+            m = m.Transposition();
+
+            CollectionAssert.AreEqual(new double[,] { { 1, 4 }, { 2, 5 }, { 3, 6 } }, m.GetArray());
+        }
     }
 }

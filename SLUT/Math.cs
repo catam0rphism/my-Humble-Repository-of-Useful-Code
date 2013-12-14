@@ -182,19 +182,34 @@ namespace SLUT.Math
         /// </summary>
         public Matrix ToTringularForm()
         {
-            for (int k = 1; k < RowCount; k++)
-            {
-                for (int i = k+1; i <= ColumnCount; i++)
-                {
-                    // хз что делать при делении на 0
-                    if (this[k - 1, k - 1] == 0) throw new DivideByZeroException();
-                    // Debug.Assert(this[k, k] == 0);
+            /// 1 2 3
+            /// 4 5 6
+            /// 7 8 9
 
-                    AddRow(i+1, k+1, -this[i, k] / this[k, k]);
+            int curr_row = 1;
+            int curr_column = 1;
+
+            while (curr_row <= RowCount || curr_column <= ColumnCount)
+            {
+                for (int row_num = curr_row + 1; row_num <= RowCount; row_num++)
+                {
+                    if (this[curr_row, curr_column] == 0) throw new DivideByZeroException();
+                    AddRow(row_num, curr_row, -this[row_num, curr_column] / this[curr_row, curr_column]);
                 }
+                curr_row++;
+                curr_column++;
             }
 
             return this;
+        }
+
+        public  Matrix Transposition()
+        {
+            Matrix m = new Matrix(ColumnCount, RowCount);
+
+            this.Map((row, column, value) => m[column, row] = value);
+
+            return m;
         }
 
         private double[,] matrix;
@@ -246,14 +261,14 @@ namespace SLUT.Math
         /// <summary>
         /// Расчет определителя. В ходе расчета матрица приводится к треугольной!
         /// </summary>
-        /// <returns></returns>
+        /// UPD: Уже нет. Исползуется копия!
         public double Determinant()
         {
             Matrix m = (Matrix)Clone();
             // TODO: исправить
             m = m.ToTringularForm();
             double res = 1;
-            for (int i = 0; i < ColumnCount; i++)
+            for (int i = 1; i <= ColumnCount; i++)
             {
                 res*=m[i,i];
             }
