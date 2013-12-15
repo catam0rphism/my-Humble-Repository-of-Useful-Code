@@ -8,6 +8,7 @@ namespace SLUT
 {
     public static class Extensions
     {
+        // Обертка над циклом foreach
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> func)
         {
             foreach (T item in source)
@@ -123,6 +124,7 @@ namespace SLUT
             /// <param name="seed">Начальное значение аккумулятора</param>
             /// <param name="f">Функция свертки</param>
             #endregion
+            // свертка во порядке Строка (L -> R) -> Столбец (U -> D)
             public static double FoldRC(this Matrix m,double seed, Func<double, double, double> f)
             {
                 double acc = seed;
@@ -157,7 +159,7 @@ namespace SLUT
             /// Выполняет поиск максимального элемента матрицы
             /// </summary>
             /// <param name="m">Матрица</param>
-            static double FindMax(this Matrix m)
+            static double Max(this Matrix m)
             {
                 return m.FoldRC(double.MinValue, System.Math.Max);
             }
@@ -165,7 +167,7 @@ namespace SLUT
             /// Выполняет поиск минимального элемента матрицы
             /// </summary>
             /// <param name="m">Матрица</param>
-            static double FindMin(this Matrix m)
+            static double Min(this Matrix m)
             {
                 return m.FoldRC(double.MaxValue, System.Math.Min);
             }
