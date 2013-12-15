@@ -182,7 +182,7 @@ namespace SLUT_Tests
         {
             Matrix m = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
 
-            m.ToTringularForm();
+            m.ToTriangularForm();
 
             CollectionAssert.AreEqual(new double[,] { { 1, 2, 3 }, 
                                                       { 0, -3, -6 }, 
@@ -198,7 +198,7 @@ namespace SLUT_Tests
             { 0, 1, 2, 2, 6, 23 }, 
             { 5, 4, 3, 3, -1, 12 } });
 
-            m = m.ToTringularForm();
+            m = m.ToTriangularForm();
 
             CollectionAssert.AreEqual(new double[,] { 
             { 1, 1, 1, 1, 1, 7 }, 

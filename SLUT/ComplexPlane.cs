@@ -7,6 +7,11 @@ using System.Xml.Serialization;
 
 namespace SLUT.Math
 {
+    /// <summary>
+    /// Класс для представления комплексной плоскости
+    /// Соотносит комплексный координаты с координатами изображения
+    /// эквивалентного данному предаставлению
+    /// </summary>
     [Serializable]
     public class ComplexPlane
         : ICloneable, IEquatable<ComplexPlane>

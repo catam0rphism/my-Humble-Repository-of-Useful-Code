@@ -179,7 +179,7 @@ namespace SLUT.Math
         /// <summary>
         /// Приводит матрицу к треугольному виду
         /// </summary>
-        public Matrix ToTringularForm()
+        public Matrix ToTriangularForm()
         {
             /// 1 2 3
             /// 4 5 6
@@ -267,7 +267,7 @@ namespace SLUT.Math
         public double Determinant()
         {
             Matrix m = (Matrix)Clone();
-            m = m.ToTringularForm();
+            m = m.ToTriangularForm();
 
             double res = 1;
             for (int i = 1; i <= ColumnCount; i++)

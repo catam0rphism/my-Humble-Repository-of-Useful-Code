@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SLUT.Math;
 
-namespace FractalVisualizerUnitTests
+namespace SLUT_Tests
 {
     [TestClass]
     public class ComplexPlaneTests
