@@ -6,6 +6,9 @@ My collection of some useful code
 ---------------------------------------
 *** Extensions class
   contains extension methods for IEnumerable collections and other classes.
+  
+*** SpeedBitMap class
+  provides methods for high-speed editing of image pixels (GetPixel and SetPixel methods significantly slower)
 
 =======================================
 SLUT.Math - My implementation of some mathematical structures and concepts
