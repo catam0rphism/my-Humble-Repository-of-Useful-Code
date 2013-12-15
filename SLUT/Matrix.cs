@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SLUT.Math
 {
     public class Matrix
-        :ICloneable
+        :ICloneable, IEquatable<Matrix>
     {
         #region Constructors
         /// <summary>
@@ -135,7 +135,6 @@ namespace SLUT.Math
         /// <returns></returns>
         public Matrix MultiplicateRow(int row, double k)
         {
-#warning MAP_FUNC_USE_INDEX!
             return this.RowMap(row, a => a * k);
         }
         /// <summary>
@@ -274,7 +273,7 @@ namespace SLUT.Math
             }
             return res;
         }
-
+        #region interfaces
         /// <summary>
         /// Создает копию текущего экземпляра
         /// </summary>
@@ -283,5 +282,17 @@ namespace SLUT.Math
             double[,] m = (double[,])GetArray().Clone();
             return new Matrix(m);
         }
+        /// <summary>
+        /// Сравнивает 2 матрицы
+        /// </summary>
+        public bool Equals(Matrix other)
+        {
+            bool IsEquals = true;
+
+            other.Iter((row, column, value) => IsEquals &= this[row, column] == value);
+
+            return IsEquals;
+        }
+        #endregion
     }
 }

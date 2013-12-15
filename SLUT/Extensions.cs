@@ -137,6 +137,18 @@ namespace SLUT
                 }
                 return acc;
             }
+            public static T FoldRC<T>(this Matrix m, T seed, Func<T, double, T> f)
+            {
+                T acc = seed;
+                for (int column_number = 1; column_number <= m.ColumnCount; column_number++)
+                {
+                    for (int row_num = 1; row_num <= m.RowCount; row_num++)
+                    {
+                        acc = f(acc, m[row_num, column_number]);
+                    }
+                }
+                return acc;
+            }
 
             /// <summary>
             /// Выполняет процедуру для каждого элемента матрицы

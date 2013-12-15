@@ -99,7 +99,7 @@ namespace SLUT_Tests
                 var n = m[0, 0];
                 Assert.Fail();
             }
-            catch (IndexOutOfRangeException ex)
+            catch (IndexOutOfRangeException)
             { }
         }
 
@@ -131,7 +131,7 @@ namespace SLUT_Tests
                 Matrix m3 = m1 + m2;
                 Assert.Fail();
             }
-            catch (ArgumentException e) { }
+            catch (ArgumentException) { }
         }
 
         [TestMethod]
