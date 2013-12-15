@@ -1,21 +1,18 @@
-===
+=======================================
 SLUT - Small Library of Useful Things
 
 My collection of some useful code
-===
 
----
-Extensions class
+---------------------------------------
+*** Extensions class
   contains extension methods for IEnumerable collections and other classes.
----
 
-===
+=======================================
 SLUT.Math - My implementation of some mathematical structures and concepts
-===
----
-Matrix class
+
+---------------------------------------
+*** Matrix class
   represent matrix and contains methods for working with them
  
-ComplexPlane class
+*** ComplexPlane class
   represent complex plane and relate it to the image coordinates (used for fractals)
----
