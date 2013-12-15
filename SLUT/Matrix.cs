@@ -192,7 +192,10 @@ namespace SLUT.Math
             {
                 for (int row_num = curr_row + 1; row_num <= RowCount; row_num++)
                 {
-                    if (this[curr_row, curr_column] == 0) throw new DivideByZeroException();
+                    // Вопрос деления на 0 решен! пропускаем обнуление строки
+                    if (this[curr_row, curr_column] == 0) break;
+
+                    // Обнуление строки
                     AddRow(row_num, curr_row, -this[row_num, curr_column] / this[curr_row, curr_column]);
                 }
                 curr_row++;
@@ -264,8 +267,8 @@ namespace SLUT.Math
         public double Determinant()
         {
             Matrix m = (Matrix)Clone();
-            // TODO: исправить
             m = m.ToTringularForm();
+
             double res = 1;
             for (int i = 1; i <= ColumnCount; i++)
             {
