@@ -273,6 +273,7 @@ namespace SLUT.Math
             }
             return res;
         }
+
         #region interfaces
         /// <summary>
         /// Создает копию текущего экземпляра
