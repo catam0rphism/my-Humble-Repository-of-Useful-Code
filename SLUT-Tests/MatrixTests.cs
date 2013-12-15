@@ -6,7 +6,7 @@ using System.Linq;
 namespace SLUT_Tests
 {
     [TestClass]
-    public class MathTests
+    public class MatrixTests
     {
         #region constructor tests
         [TestMethod]
