@@ -190,7 +190,7 @@ namespace SLUT_Tests
         }
 
         [TestMethod]
-        public void Transform_to_tringular_matrix_2()
+        public void Transform_to_tringular_matrix_with_zero_element()
         {
             Matrix m = new Matrix(new double[,] { 
             { 1, 1, 1, 1, 1, 7 }, 

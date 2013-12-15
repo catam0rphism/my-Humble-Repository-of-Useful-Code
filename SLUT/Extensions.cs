@@ -23,7 +23,6 @@ namespace SLUT
     {
         public static class MatrixExtensions
         {
-            #region Higher-order functions
             #region map functions
             /// <summary>
             /// Проецирует каждый элемент на новую матрицу
@@ -166,7 +165,7 @@ namespace SLUT
                 }
                 return m;
             }
-
+            #region max/min
             /// <summary>
             /// Выполняет поиск максимального элемента матрицы
             /// </summary>
@@ -183,6 +182,7 @@ namespace SLUT
             {
                 return m.FoldRC(double.MaxValue, System.Math.Min);
             }
+            #endregion
 
             /// <summary>
             /// Выполняет поиск строки и столбца первого вхождения элемента
@@ -209,7 +209,6 @@ namespace SLUT
                 }
                 throw new ArgumentOutOfRangeException("Матрица не содержит элемента");
             }
-            #endregion
         }
     }
 }
