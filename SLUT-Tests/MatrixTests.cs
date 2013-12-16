@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SLUT.Math;
+using HRUC.Math;
 using System.Linq;
 
-namespace SLUT_Tests
+namespace HRUC_Tests
 {
     [TestClass]
     public class MatrixTests

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLUT-Tests", "SLUT-Tests\SLUT-Tests.csproj", "{37FFDB7A-57B9-4CA8-98DB-9B3B821C3866}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRUC-Tests", "SLUT-Tests\HRUC-Tests.csproj", "{37FFDB7A-57B9-4CA8-98DB-9B3B821C3866}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLUT", "SLUT\SLUT.csproj", "{33DFEE9B-89B3-46D6-8845-8B13E9D9D27D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRUC", "SLUT\HRUC.csproj", "{33DFEE9B-89B3-46D6-8845-8B13E9D9D27D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

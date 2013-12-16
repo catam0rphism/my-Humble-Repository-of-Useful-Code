@@ -6,7 +6,7 @@
     <ProjectGuid>{37FFDB7A-57B9-4CA8-98DB-9B3B821C3866}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SLUT_Tests</RootNamespace>
+    <RootNamespace>HRUC_Tests</RootNamespace>
     <AssemblyName>SLUT-Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -60,9 +60,9 @@
     <Compile Include="MatrixTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SLUT\SLUT.csproj">
+    <ProjectReference Include="..\SLUT\HRUC.csproj">
       <Project>{33dfee9b-89b3-46d6-8845-8b13e9d9d27d}</Project>
-      <Name>SLUT</Name>
+      <Name>HRUC</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

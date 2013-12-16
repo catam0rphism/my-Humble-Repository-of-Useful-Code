@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SLUT
+namespace HRUC
 {
     public static class Extensions
     {

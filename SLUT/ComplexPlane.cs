@@ -5,7 +5,7 @@ using System.Text;
 using System.Numerics;
 using System.Xml.Serialization;
 
-namespace SLUT.Math
+namespace HRUC.Math
 {
     /// <summary>
     /// Класс для представления комплексной плоскости

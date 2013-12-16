@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SLUT.Math;
+using HRUC.Math;
 
-namespace SLUT_Tests
+namespace HRUC_Tests
 {
     [TestClass]
     public class ComplexPlaneTests

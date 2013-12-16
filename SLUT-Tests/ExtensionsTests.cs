@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SLUT;
-using SLUT.Math;
+using HRUC;
+using HRUC.Math;
 
-namespace SLUT_Tests
+namespace HRUC_Tests
 {
     [TestClass]
     public class ExtensionsTests

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SLUT.Math
+namespace HRUC.Math
 {
     public class Matrix
         :ICloneable, IEquatable<Matrix>
