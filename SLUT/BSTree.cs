@@ -11,57 +11,40 @@ namespace HRUC
         T Data { get; set; }
         IBinaryTree<T> LeftNode { get; set; }
         IBinaryTree<T> RightNode { get; set; }
+        bool IsEmpty { get; }
     }
 
-    public struct BSTree<T> : IBinaryTree<T>
-        where T: IComparable<T>
+    public class BSTree<TKey,TValue> : IBinaryTree<TValue>
+        where TKey: IComparable<TKey>
     {
-        public T Data
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public BSTree<T> LeftNode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-        public BSTree<T> RightNode
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public TKey Key { get; set; }
+        public TValue Data { get; set; }
+        public BSTree<TKey, TValue> LeftNode { get; set; }
+        public BSTree<TKey, TValue> RightNode { get; set; }
 
         #region IBinaryTree<T>
-        IBinaryTree<T> IBinaryTree<T>.LeftNode
+        IBinaryTree<TValue> IBinaryTree<TValue>.LeftNode
         {
             get { return LeftNode; }
-            set { LeftNode = (BSTree<T>)value; }
+            set { LeftNode = (BSTree<TKey,TValue>)value; }
         }
-
-        IBinaryTree<T> IBinaryTree<T>.RightNode
+        IBinaryTree<TValue> IBinaryTree<TValue>.RightNode
         {
             get { return RightNode; }
-            set { RightNode = (BSTree<T>)value; }
+            set { RightNode = (BSTree<TKey,TValue>)value; }
+        }
+        bool IBinaryTree<TValue>.IsEmpty
+        {
+            get { return LeftNode == null || RightNode == null; }
         }
         #endregion
+
+    }
+
+    // Реализация Collections.Generic.KeyValuePair<TKey,TValue> - структура. От нее нельзя наследовать
+    public interface IKeyValuePair<TKey, TValue>
+    {
+        TKey Key { get; set; }
+        TValue Value { get; set; }
     }
 }
