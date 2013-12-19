@@ -22,6 +22,27 @@ namespace HRUC
         public BSTree<TKey, TValue> LeftNode { get; set; }
         public BSTree<TKey, TValue> RightNode { get; set; }
 
+        public BSTree<TKey, TValue> Find(TKey k)
+        {
+            var compare_result = Key.CompareTo(k);
+            if(compare_result == 0)
+            {
+                return this;
+            }
+            else if(compare_result < 0)
+            {
+                if (RightNode != null)
+                    return RightNode.Find(k);
+                else throw new InvalidOperationException("Элемента нету! уперли!");
+            }
+            else 
+            {
+                if (LeftNode != null)
+                    return LeftNode.Find(k);
+                else throw new InvalidOperationException("Элемента нету! уперли!");
+            }
+        }
+
         #region IBinaryTree<T>
         IBinaryTree<TValue> IBinaryTree<TValue>.LeftNode
         {
@@ -47,7 +68,7 @@ namespace HRUC
         public static bool IsCorrectBSTree(BSTree<TKey,TValue> bstree)       
         {            
             Func<bool> compareWithLeftTree = () => bstree.LeftNode.Key.CompareTo(bstree.Key) < 0;
-            Func<bool> compareWithRightTree = () => bstree.Key.CompareTo(bstree.RightNode.Key) < 0;
+            Func<bool> compareWithRightTree = () => bstree.Key.CompareTo(bstree.RightNode.Key) <= 0;
 
             // Рекурсия =)
             if (bstree.LeftNode == null && bstree.RightNode == null)
