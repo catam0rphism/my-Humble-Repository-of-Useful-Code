@@ -17,6 +17,20 @@ namespace HRUC
             }
         }
 
+        public static U Null<T, U>(this T @object, Func<T, U> func)
+            where U : class
+            where T : class
+        {
+            if (@object != null)
+            {
+                return func(@object);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
     }
 
     namespace Math
