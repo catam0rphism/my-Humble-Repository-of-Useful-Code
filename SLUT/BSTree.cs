@@ -42,6 +42,30 @@ namespace HRUC
                 else throw new InvalidOperationException("Элемента нету! уперли!");
             }
         }
+        public void Insert(TKey k, TValue data)
+        {
+            var compare_result = Key.CompareTo(k);
+
+            if (compare_result == 0)
+            {
+                this.Data = data; // обновление данных при совпадении ключа
+            }
+            else if (compare_result > 0)
+            {
+                if (LeftNode != null)
+                    LeftNode.Insert(k, data); // рекурсивный поиск
+                else
+                    LeftNode = new BSTree<TKey, TValue>() // создание ветви 
+                    { Key = k, Data = data };
+            }
+            else
+            {
+                if (RightNode != null)
+                    RightNode.Insert(k, data);
+                else
+                    RightNode = new BSTree<TKey, TValue>() { Key = k, Data = data };
+            }
+        }
 
         #region IBinaryTree<T>
         IBinaryTree<TValue> IBinaryTree<TValue>.LeftNode
