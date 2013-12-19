@@ -39,12 +39,31 @@ namespace HRUC
         }
         #endregion
 
-    }
+        /// <summary>
+        /// Метод проверки корректности двоичного дерева поиска
+        /// </summary>
+        /// <param name="bstree">Проверяемое дерево</param>
+        /// <returns></returns>
+        public static bool IsCorrectBSTree(BSTree<TKey,TValue> bstree)       
+        {            
+            Func<bool> compareWithLeftTree = () => bstree.LeftNode.Key.CompareTo(bstree.Key) < 0;
+            Func<bool> compareWithRightTree = () => bstree.Key.CompareTo(bstree.RightNode.Key) < 0;
 
-    // Реализация Collections.Generic.KeyValuePair<TKey,TValue> - структура. От нее нельзя наследовать
-    public interface IKeyValuePair<TKey, TValue>
-    {
-        TKey Key { get; set; }
-        TValue Value { get; set; }
+            // Рекурсия =)
+            if (bstree.LeftNode == null && bstree.RightNode == null)
+                return true; // выход из рекурсии
+
+            if (bstree.LeftNode == null && bstree.RightNode != null)
+                return compareWithRightTree() && IsCorrectBSTree(bstree.RightNode);
+
+            if (bstree.RightNode == null && bstree.LeftNode != null)
+                return compareWithLeftTree() && IsCorrectBSTree(bstree.LeftNode);
+
+            return compareWithLeftTree() // Верно левая ветвь
+                && compareWithRightTree() // Правая ветвь
+                && IsCorrectBSTree(bstree.LeftNode) // Левое дерево
+                && IsCorrectBSTree(bstree.RightNode); // Правое дерево
+
+        }
     }
 }
