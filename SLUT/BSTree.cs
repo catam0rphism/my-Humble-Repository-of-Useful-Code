@@ -46,7 +46,6 @@ namespace HRUC
         private BSTree<TKey, TValue> right_node;
         #endregion
 
-
         public BSTree<TKey, TValue> Find(TKey k)
         {
             var compare_result = Key.CompareTo(k);
@@ -58,13 +57,13 @@ namespace HRUC
             {
                 if (RightNode != null)
                     return RightNode.Find(k);
-                else throw new InvalidOperationException("Элемента нету!");
+                else throw new InvalidOperationException("Искомый элемент отсутствует");
             }
             else 
             {
                 if (LeftNode != null)
                     return LeftNode.Find(k);
-                else throw new InvalidOperationException("Элемента нету!");
+                else throw new InvalidOperationException("Искомый элемент отсутствует");
             }
         }
         public void Insert(TKey k, TValue data)
@@ -92,10 +91,18 @@ namespace HRUC
                     { Key = k, Data = data, parent = this };
             }
         }
-
         public void Remove(TKey k)
         {
-            var del_node = Find(k);
+            BSTree<TKey, TValue> del_node;
+            try
+            {
+                del_node = Find(k);
+            }
+            catch(InvalidOperationException)
+            {
+                throw new InvalidOperationException("Удаляемый элемент отсутствует");
+            }
+
             var del_parent = del_node.parent;
 
             if (del_node.IsLeaf)
@@ -139,7 +146,7 @@ namespace HRUC
             }
         }
 
-        #region IBinaryTree<T>
+        #region IBinaryTree<T> implementation
         IBinaryTree<TValue> IBinaryTree<TValue>.LeftNode
         {
             get { return LeftNode; }
@@ -155,7 +162,7 @@ namespace HRUC
             get { return LeftNode == null || RightNode == null; }
         }
         #endregion
-
+        
         /// <summary>
         /// Метод проверки корректности двоичного дерева поиска
         /// </summary>
