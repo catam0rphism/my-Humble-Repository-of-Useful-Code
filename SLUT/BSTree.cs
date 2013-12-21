@@ -14,13 +14,14 @@ namespace HRUC
         bool IsLeaf { get; }
     }
 
-    public class BSTree<TKey,TValue> : IBinaryTree<TValue>
+    // TODO: Красно-черное дерево (и АВЛ дерево =) )
+    public class BSTree<TKey,TData> : IBinaryTree<TData>
         where TKey: IComparable<TKey>
     {
         #region public propertys
         public TKey Key { get; set; }
-        public TValue Data { get; set; }
-        public BSTree<TKey, TValue> LeftNode {
+        public TData Data { get; set; }
+        public BSTree<TKey, TData> LeftNode {
             get { return left_node; }
             set
             {
@@ -28,7 +29,7 @@ namespace HRUC
                 if (value != null) left_node.parent = this;
             }
         }
-        public BSTree<TKey, TValue> RightNode
+        public BSTree<TKey, TData> RightNode
         {
             get
             { return right_node; }
@@ -41,12 +42,17 @@ namespace HRUC
         #endregion
         #region fields
         // открытого parent не будет!
-        private BSTree<TKey, TValue> parent;
-        private BSTree<TKey, TValue> left_node;
-        private BSTree<TKey, TValue> right_node;
+        private BSTree<TKey, TData> parent;
+        private BSTree<TKey, TData> left_node;
+        private BSTree<TKey, TData> right_node;
         #endregion
 
-        public BSTree<TKey, TValue> Find(TKey k)
+        /// <summary>
+        /// Выполняет поиск элемента дерева. Если элемент отсутствует бросает исключение.
+        /// </summary>
+        /// <param name="k">Ключь искомого элемента</param>
+        /// <returns>Элемент с искомым ключем</returns>
+        public BSTree<TKey, TData> Find(TKey k)
         {
             var compare_result = Key.CompareTo(k);
             if(compare_result == 0)
@@ -66,7 +72,13 @@ namespace HRUC
                 else throw new InvalidOperationException("Искомый элемент отсутствует");
             }
         }
-        public void Insert(TKey k, TValue data)
+        /// <summary>
+        /// Выполняет вставку элемента в дерево.
+        /// При совпадении ключей обновляет значение
+        /// </summary>
+        /// <param name="k">Кючь вставляемого элемента</param>
+        /// <param name="data">Значение элемента</param>
+        public void Insert(TKey k, TData data)
         {
             var compare_result = Key.CompareTo(k);
 
@@ -79,7 +91,7 @@ namespace HRUC
                 if (LeftNode != null)
                     LeftNode.Insert(k, data); // рекурсивный поиск
                 else
-                    LeftNode = new BSTree<TKey, TValue>() // создание ветви 
+                    LeftNode = new BSTree<TKey, TData>() // создание ветви 
                     { Key = k, Data = data, parent = this };
             }
             else
@@ -87,13 +99,17 @@ namespace HRUC
                 if (RightNode != null)
                     RightNode.Insert(k, data);
                 else
-                    RightNode = new BSTree<TKey, TValue>() 
+                    RightNode = new BSTree<TKey, TData>() 
                     { Key = k, Data = data, parent = this };
             }
         }
+        /// <summary>
+        /// Удаляет элемент из дерева
+        /// </summary>
+        /// <param name="k">Удаляемый элемент</param>
         public void Remove(TKey k)
         {
-            BSTree<TKey, TValue> del_node;
+            BSTree<TKey, TData> del_node;
             try
             {
                 del_node = Find(k);
@@ -146,34 +162,47 @@ namespace HRUC
             }
         }
 
-        public void Traverse_infix(Action<TKey, TValue> action)
+        /// <summary>
+        /// Обход дерева в порядке Левое поддерево -> Вершина -> Правое поддерево
+        /// </summary>
+        /// <param name="action">Действие, выполняемое с каждым элементом</param>
+        public void Traverse_infix(Action<TKey, TData> action)
         {
             if (LeftNode != null) LeftNode.Traverse_infix(action);
             action(Key, Data);
             if (RightNode != null) RightNode.Traverse_infix(action);
         }
-        public void Traverse_prefix(Action<TKey, TValue> action)
+        /// <summary>
+        /// Обход дерева в порядке Вершина -> Левое поддерево -> Правое поддерево
+        /// </summary>
+        /// <param name="action">Действие, выполняемое с каждым элементом</param>
+        public void Traverse_prefix(Action<TKey, TData> action)
         {
             action(Key, Data);
             if (LeftNode != null) LeftNode.Traverse_prefix(action);
             if (RightNode != null) RightNode.Traverse_prefix(action);
         }
-        public void Traverse_postfix(Action<TKey, TValue> action)
+        /// <summary>
+        /// Обход дерева в порядке Левое поддерево -> Правое поддерево -> Вершина
+        /// </summary>
+        /// <param name="action">Действие, выполняемое с каждым элементом</param>        
+        public void Traverse_postfix(Action<TKey, TData> action)
         {
             if (LeftNode != null) LeftNode.Traverse_postfix(action);
             if (RightNode != null) RightNode.Traverse_postfix(action);
             action(Key, Data);
         }
+
         #region IBinaryTree<T> implementation
-        IBinaryTree<TValue> IBinaryTree<TValue>.LeftNode
+        IBinaryTree<TData> IBinaryTree<TData>.LeftNode
         {
             get { return LeftNode; }
-            set { LeftNode = (BSTree<TKey,TValue>)value; }
+            set { LeftNode = (BSTree<TKey,TData>)value; }
         }
-        IBinaryTree<TValue> IBinaryTree<TValue>.RightNode
+        IBinaryTree<TData> IBinaryTree<TData>.RightNode
         {
             get { return RightNode; }
-            set { RightNode = (BSTree<TKey,TValue>)value; }
+            set { RightNode = (BSTree<TKey,TData>)value; }
         }
         public bool IsLeaf
         {
@@ -186,7 +215,7 @@ namespace HRUC
         /// </summary>
         /// <param name="bstree">Проверяемое дерево</param>
         /// <returns></returns>
-        public static bool IsCorrectBSTree(BSTree<TKey,TValue> bstree)       
+        public static bool IsCorrectBSTree(BSTree<TKey,TData> bstree)
         {            
             Func<bool> compareWithLeftTree = () => bstree.LeftNode.Key.CompareTo(bstree.Key) < 0;
             Func<bool> compareWithRightTree = () => bstree.Key.CompareTo(bstree.RightNode.Key) <= 0;
