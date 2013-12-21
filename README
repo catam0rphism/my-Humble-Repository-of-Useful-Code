@@ -1,5 +1,6 @@
+HRUC
 =======================================
-HRUC - my Humble Repository of Useful Code
+my Humble Repository of Useful Code
 
 ---------------------------------------
 *** Extensions class
@@ -10,8 +11,11 @@ HRUC - my Humble Repository of Useful Code
 
 *** BSTree class
   represent binary search tree
+
+
+HRUC.Math
 =======================================
-SLUT.Math - My implementation of some mathematical structures and concepts
+My implementation of some mathematical structures and concepts
 
 ---------------------------------------
 *** Matrix class
