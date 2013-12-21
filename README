@@ -8,6 +8,8 @@ HRUC - my Humble Repository of Useful Code
 *** SpeedBitMap class
   provides methods for high-speed editing of image pixels (GetPixel and SetPixel methods significantly slower)
 
+*** BSTree class
+  represent binary search tree
 =======================================
 SLUT.Math - My implementation of some mathematical structures and concepts
 
