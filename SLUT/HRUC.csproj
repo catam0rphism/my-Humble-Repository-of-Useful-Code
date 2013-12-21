@@ -40,6 +40,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSTree.cs" />
     <Compile Include="ComplexPlane.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Matrix.cs" />
