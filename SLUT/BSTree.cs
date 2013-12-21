@@ -146,6 +146,24 @@ namespace HRUC
             }
         }
 
+        public void Traverse_infix(Action<TKey, TValue> action)
+        {
+            if (LeftNode != null) LeftNode.Traverse_infix(action);
+            action(Key, Data);
+            if (RightNode != null) RightNode.Traverse_infix(action);
+        }
+        public void Traverse_prefix(Action<TKey, TValue> action)
+        {
+            action(Key, Data);
+            if (LeftNode != null) LeftNode.Traverse_prefix(action);
+            if (RightNode != null) RightNode.Traverse_prefix(action);
+        }
+        public void Traverse_postfix(Action<TKey, TValue> action)
+        {
+            if (LeftNode != null) LeftNode.Traverse_postfix(action);
+            if (RightNode != null) RightNode.Traverse_postfix(action);
+            action(Key, Data);
+        }
         #region IBinaryTree<T> implementation
         IBinaryTree<TValue> IBinaryTree<TValue>.LeftNode
         {
