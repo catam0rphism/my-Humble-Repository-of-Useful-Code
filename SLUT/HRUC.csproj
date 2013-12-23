@@ -41,8 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BSTree.cs" />
-    <Compile Include="ComplexPlane.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Math\ComplexPlane.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="SpeedBitmap.cs" />
   </ItemGroup>

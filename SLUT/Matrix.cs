@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRUC.Math
 {
@@ -46,8 +43,8 @@ namespace HRUC.Math
         /// <summary>
         /// Задает или возвращает элемент матрицы
         /// </summary>
-        /// <param name="row_index">Индекс строки</param>
-        /// <param name="column_index">Индекс столбца</param>
+        /// <param name="row_number">Индекс строки</param>
+        /// <param name="column_number">Индекс столбца</param>
         /// <returns>Элемент матрицы, занимающий данную позицию</returns>
         public double this[int row_number, int column_number]
         {
@@ -81,7 +78,6 @@ namespace HRUC.Math
             {
                 yield return this[row, column];
             }
-            yield break;
         }
         /// <summary>
         /// Формирует список элементов строки матрицы
@@ -94,7 +90,6 @@ namespace HRUC.Math
             {
                 yield return this[row, column];
             }
-            yield break;
         }
 
         /// <summary>
@@ -181,9 +176,9 @@ namespace HRUC.Math
         /// </summary>
         public Matrix ToTriangularForm()
         {
-            /// 1 2 3
-            /// 4 5 6
-            /// 7 8 9
+            // 1 2 3
+            // 4 5 6
+            // 7 8 9
 
             int curr_row = 1;
             int curr_column = 1;
@@ -214,7 +209,7 @@ namespace HRUC.Math
             return m;
         }
 
-        private double[,] matrix;
+        private readonly double[,] matrix;
 
         #region operators
         public static Matrix operator +(Matrix matrix1, Matrix matrix2)
@@ -237,10 +232,9 @@ namespace HRUC.Math
         {
             if (m1.RowCount != m2.ColumnCount)
                 throw new ArgumentException("Форма матриц не согласована");
-            
-            int res_w, res_h;
-            res_w = m2.ColumnCount;
-            res_h = m1.RowCount;
+
+            int res_w = m2.ColumnCount;
+            int res_h = m1.RowCount;
 
             Matrix res = new Matrix(res_h,res_w);
 

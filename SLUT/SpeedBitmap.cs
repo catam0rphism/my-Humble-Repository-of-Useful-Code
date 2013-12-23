@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRUC
 {
@@ -74,14 +69,12 @@ namespace HRUC
 
         public Color GetPixel(int x, int y)
         {
-            byte r, g, b, a;
-
             int start_index = img_data.Height * y + color_size * x;
             
-            b = image_pixel_array[start_index];
-            g = image_pixel_array[start_index + 1];
-            r = image_pixel_array[start_index + 2];
-            a = image_pixel_array[start_index + 3];
+            byte b = image_pixel_array[start_index];
+            byte g = image_pixel_array[start_index + 1];
+            byte r = image_pixel_array[start_index + 2];
+            byte a = image_pixel_array[start_index + 3];
 
             return Color.FromArgb(a, r, g, b);            
         }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRUC
 {
@@ -25,12 +22,8 @@ namespace HRUC
             {
                 return func(@object);
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
-
     }
 
     namespace Math
@@ -63,7 +56,7 @@ namespace HRUC
             /// <returns></returns>
             public static Matrix Map(this Matrix m, Func<int, int, double, double> f)
             {
-                /// f: row_num column_num value -> f(...)
+                // f: row_num column_num value -> f(...)
                 m = (Matrix)m.Clone();
                 for (int i = 1; i <= m.ColumnCount; i++)
                 {
@@ -97,11 +90,12 @@ namespace HRUC
                 }
                 return m3;
             }
+
             /// <summary>
             /// Применяет к каждуму элементу одного столбца функцию
             /// </summary>
             /// <param name="m">Исходная матрица</param>
-            /// <param name="row_num">Номер изменяемого столбца</param>
+            /// <param name="column_num">Номер изменяемого столбца</param>
             /// <param name="f">Функция, применяемая для отображения элемента</param>
             /// <returns></returns>
             public static Matrix ColumnMap(this Matrix m, int column_num, Func<double, double> f)

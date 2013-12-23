@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HRUC
 {
@@ -59,18 +55,15 @@ namespace HRUC
             {
                 return this;
             }
-            else if(compare_result < 0)
+            if(compare_result < 0)
             {
                 if (RightNode != null)
                     return RightNode.Find(k);
-                else throw new InvalidOperationException("Искомый элемент отсутствует");
+                throw new InvalidOperationException("Искомый элемент отсутствует");
             }
-            else 
-            {
-                if (LeftNode != null)
-                    return LeftNode.Find(k);
-                else throw new InvalidOperationException("Искомый элемент отсутствует");
-            }
+            if (LeftNode != null)
+                return LeftNode.Find(k);
+            throw new InvalidOperationException("Искомый элемент отсутствует");
         }
         /// <summary>
         /// Выполняет вставку элемента в дерево.
@@ -91,7 +84,7 @@ namespace HRUC
                 if (LeftNode != null)
                     LeftNode.Insert(k, data); // рекурсивный поиск
                 else
-                    LeftNode = new BSTree<TKey, TData>() // создание ветви 
+                    LeftNode = new BSTree<TKey, TData> // создание ветви 
                     { Key = k, Data = data, parent = this };
             }
             else
@@ -99,8 +92,7 @@ namespace HRUC
                 if (RightNode != null)
                     RightNode.Insert(k, data);
                 else
-                    RightNode = new BSTree<TKey, TData>() 
-                    { Key = k, Data = data, parent = this };
+                    RightNode = new BSTree<TKey, TData> { Key = k, Data = data, parent = this };
             }
         }
         /// <summary>
