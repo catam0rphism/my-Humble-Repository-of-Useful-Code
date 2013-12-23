@@ -43,7 +43,7 @@
     <Compile Include="BSTree.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Math\ComplexPlane.cs" />
-    <Compile Include="Matrix.cs" />
+    <Compile Include="Math\Matrix.cs" />
     <Compile Include="SpeedBitmap.cs" />
   </ItemGroup>
   <ItemGroup>

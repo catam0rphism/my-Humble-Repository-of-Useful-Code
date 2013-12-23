@@ -19,8 +19,8 @@ namespace HRUC_Tests
         [TestMethod]
         public void Initialize_matrix_using_double_array_comstructor()
         {
-            var matrix_data = new double[2, 3] { { 1, 2, 3 }, 
-                                                 { 4, 5, 6 } };
+            var matrix_data = new double[,] { { 1, 2, 3 }, 
+                                              { 4, 5, 6 } };
 
             Matrix m = new Matrix(matrix_data);
 

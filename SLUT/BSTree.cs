@@ -18,29 +18,29 @@ namespace HRUC
         public TKey Key { get; set; }
         public TData Data { get; set; }
         public BSTree<TKey, TData> LeftNode {
-            get { return left_node; }
+            get { return _leftNode; }
             set
             {
-                left_node = value;
-                if (value != null) left_node.parent = this;
+                _leftNode = value;
+                if (value != null) _leftNode._parent = this;
             }
         }
         public BSTree<TKey, TData> RightNode
         {
             get
-            { return right_node; }
+            { return _rightNode; }
             set
             {
-                right_node = value;
-                if (value != null) right_node.parent = this;
+                _rightNode = value;
+                if (value != null) _rightNode._parent = this;
             }
         }
         #endregion
         #region fields
         // открытого parent не будет!
-        private BSTree<TKey, TData> parent;
-        private BSTree<TKey, TData> left_node;
-        private BSTree<TKey, TData> right_node;
+        private BSTree<TKey, TData> _parent;
+        private BSTree<TKey, TData> _leftNode;
+        private BSTree<TKey, TData> _rightNode;
         #endregion
 
         /// <summary>
@@ -50,12 +50,12 @@ namespace HRUC
         /// <returns>Элемент с искомым ключем</returns>
         public BSTree<TKey, TData> Find(TKey k)
         {
-            var compare_result = Key.CompareTo(k);
-            if(compare_result == 0)
+            var compareResult = Key.CompareTo(k);
+            if(compareResult == 0)
             {
                 return this;
             }
-            if(compare_result < 0)
+            if(compareResult < 0)
             {
                 if (RightNode != null)
                     return RightNode.Find(k);
@@ -73,26 +73,26 @@ namespace HRUC
         /// <param name="data">Значение элемента</param>
         public void Insert(TKey k, TData data)
         {
-            var compare_result = Key.CompareTo(k);
+            var compareResult = Key.CompareTo(k);
 
-            if (compare_result == 0)
+            if (compareResult == 0)
             {
-                this.Data = data; // обновление данных при совпадении ключа
+                Data = data; // обновление данных при совпадении ключа
             }
-            else if (compare_result > 0)
+            else if (compareResult > 0)
             {
                 if (LeftNode != null)
                     LeftNode.Insert(k, data); // рекурсивный поиск
                 else
                     LeftNode = new BSTree<TKey, TData> // создание ветви 
-                    { Key = k, Data = data, parent = this };
+                    { Key = k, Data = data, _parent = this };
             }
             else
             {
                 if (RightNode != null)
                     RightNode.Insert(k, data);
                 else
-                    RightNode = new BSTree<TKey, TData> { Key = k, Data = data, parent = this };
+                    RightNode = new BSTree<TKey, TData> { Key = k, Data = data, _parent = this };
             }
         }
         /// <summary>
@@ -101,55 +101,55 @@ namespace HRUC
         /// <param name="k">Удаляемый элемент</param>
         public void Remove(TKey k)
         {
-            BSTree<TKey, TData> del_node;
+            BSTree<TKey, TData> delNode;
             try
             {
-                del_node = Find(k);
+                delNode = Find(k);
             }
             catch(InvalidOperationException)
             {
                 throw new InvalidOperationException("Удаляемый элемент отсутствует");
             }
 
-            var del_parent = del_node.parent;
+            var delParent = delNode._parent;
 
-            if (del_node.IsLeaf)
+            if (delNode.IsLeaf)
             {
                 // Удаляем del_node
 
-                if (del_parent.Key.CompareTo(del_node.Key) > 0)
-                    del_parent.LeftNode = null;
-                else del_parent.RightNode = null;
+                if (delParent.Key.CompareTo(delNode.Key) > 0)
+                    delParent.LeftNode = null;
+                else delParent.RightNode = null;
 
                 // Необходимо?
                 // del_node.parent = null;
                 // сборщик мусора и так очистит
             }
             // есть только одна дочерняя нода
-            else if (del_node.LeftNode == null ^ del_node.RightNode == null)
+            else if (delNode.LeftNode == null ^ delNode.RightNode == null)
             {
                 // Вставляем дочернюю на место удаляемой
-                if (del_parent.Key.CompareTo(del_node.Key) > 0)
+                if (delParent.Key.CompareTo(delNode.Key) > 0)
                 {
-                    del_parent.LeftNode = del_node.LeftNode ?? del_node.RightNode;
+                    delParent.LeftNode = delNode.LeftNode ?? delNode.RightNode;
                 }
                 else
                 {
-                    del_parent.LeftNode = del_node.LeftNode ?? del_node.RightNode;
+                    delParent.LeftNode = delNode.LeftNode ?? delNode.RightNode;
                 }
             }
             // обе дочерние ветви существуют
-            else
+            else if(delNode.LeftNode != null && delNode.RightNode!=null)
             {
                 // если есть правый потомок левого дерева
-                if (del_node.RightNode.LeftNode != null)
+                if (delNode.RightNode.LeftNode != null)
                 {
                     // обменять значение и ключь
-                    del_node.Data = del_node.RightNode.LeftNode.Data;
-                    del_node.Key = del_node.RightNode.LeftNode.Key;
+                    delNode.Data = delNode.RightNode.LeftNode.Data;
+                    delNode.Key = delNode.RightNode.LeftNode.Key;
 
                     // рекурсивно удалить потомка
-                    del_node.RightNode.LeftNode.Remove(del_node.RightNode.LeftNode.Key);
+                    delNode.RightNode.LeftNode.Remove(delNode.RightNode.LeftNode.Key);
                 }
             }
         }

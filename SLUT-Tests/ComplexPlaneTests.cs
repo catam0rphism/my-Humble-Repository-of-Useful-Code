@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.IO;
+using System.Numerics;
 using System.Xml.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HRUC.Math;
@@ -8,29 +9,29 @@ namespace HRUC_Tests
     [TestClass]
     public class ComplexPlaneTests
     {
-        static ComplexPlane cp = null;
+        static ComplexPlane _complexPlane;
 
         [ClassInitialize]
         public static void Initialize(TestContext tc)
         {
-            cp = new ComplexPlane(0.002, 347, 347*4, new System.Numerics.Complex(0, 0));
+            _complexPlane = new ComplexPlane(0.002, 347, 347*4, new Complex(0, 0));
         }
 
         [TestMethod]
         public void Find_max_and_min_value()
         {
-            Assert.AreEqual(-0.347, cp.MinReal, cp.Delta / 2, "MinReal isn't correct");
-            Assert.AreEqual(0.347, cp.MaxReal, cp.Delta / 2, "MaxReal isn't correct");
+            Assert.AreEqual(-0.347, _complexPlane.MinReal, _complexPlane.Delta / 2, "MinReal isn't correct");
+            Assert.AreEqual(0.347, _complexPlane.MaxReal, _complexPlane.Delta / 2, "MaxReal isn't correct");
 
-            Assert.AreEqual(-1.388, cp.MinImag, cp.Delta / 2, "MinImmag isn't correct");
-            Assert.AreEqual(1.388, cp.MaxImag, cp.Delta / 2, "MaxImmag isn't correct");
+            Assert.AreEqual(-1.388, _complexPlane.MinImag, _complexPlane.Delta / 2, "MinImmag isn't correct");
+            Assert.AreEqual(1.388, _complexPlane.MaxImag, _complexPlane.Delta / 2, "MaxImmag isn't correct");
         }
 
         [TestMethod]
         public void Get_value_using_index()
         {
-            Assert.AreEqual(-0.347, cp[0, 0].Real, cp.Delta / 2, "Index [0,0] real path isn't correct");
-            Assert.AreEqual(1.388, cp[0, 0].Imaginary, cp.Delta / 2, "Index [0,0] immag path isn't correct");
+            Assert.AreEqual(-0.347, _complexPlane[0, 0].Real, _complexPlane.Delta / 2, "Index [0,0] real path isn't correct");
+            Assert.AreEqual(1.388, _complexPlane[0, 0].Imaginary, _complexPlane.Delta / 2, "Index [0,0] immag path isn't correct");
         }
 
         [TestMethod]
@@ -38,28 +39,28 @@ namespace HRUC_Tests
         {
             XmlSerializer xs = new XmlSerializer(typeof(ComplexPlane));
 
-            using (System.IO.FileStream fs = 
-                new System.IO.FileStream("temp", System.IO.FileMode.Create))
+            using (FileStream fs = 
+                new FileStream("temp", FileMode.Create))
             {
-                xs.Serialize(fs, cp);
+                xs.Serialize(fs, _complexPlane);
             }
 
-            using (System.IO.FileStream fs =
-                new System.IO.FileStream("temp", System.IO.FileMode.Open))
+            using (FileStream fs =
+                new FileStream("temp", FileMode.Open))
             {
-                Assert.AreEqual(cp, xs.Deserialize(fs));
-                //Assert.IsTrue(cp==(ComplexPlane)xs.Deserialize(fs));
+                Assert.AreEqual(_complexPlane, xs.Deserialize(fs));
+                //Assert.IsTrue(complexPlane==(ComplexPlane)xs.Deserialize(fs));
             }
-            System.IO.File.Delete("temp");
+            File.Delete("temp");
         }
 
         [TestMethod]
         public void Clone_complex_plane()
         {
-            ComplexPlane test = cp.Clone() as ComplexPlane;
+            ComplexPlane test = _complexPlane.Clone() as ComplexPlane;
 
-            Assert.IsFalse(object.ReferenceEquals(test, cp));
-            Assert.AreEqual(cp,test);
+            Assert.IsFalse(ReferenceEquals(test, _complexPlane));
+            Assert.AreEqual(_complexPlane,test);
 
         }
     }

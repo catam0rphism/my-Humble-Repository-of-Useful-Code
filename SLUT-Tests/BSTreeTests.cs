@@ -17,11 +17,11 @@ namespace HRUC_Tests
             tree.Insert(1, "1");
             tree.Insert(3, "3");
 
-            ///    0
-            ///   / \
-            /// -1   2
-            ///     / \
-            ///    1   3
+            //    0
+            //   / \
+            // -1   2
+            //     / \
+            //    1   3
 
             Assert.AreEqual("zero", tree.Data);
             Assert.AreEqual("3", tree.RightNode.RightNode.Data);
@@ -43,14 +43,14 @@ namespace HRUC_Tests
             tree.Insert(1, "1");
             tree.Insert(3, "3");
 
-            ///    0
-            ///   / \
-            /// -1   2
-            ///     / \
-            ///    1   3
-            ///    
+            //    0
+            //   / \
+            // -1   2
+            //     / \
+            //    1   3
+            //    
 
-            /// Act
+            // Act
             var find_result = tree.Find(2);
 
             Assert.AreEqual("2", find_result.Data);
@@ -76,13 +76,13 @@ namespace HRUC_Tests
             tree.Insert(9, "9");
             tree.Insert(4, "4");
 
-            ///     7
-            ///    / \
-            ///   3   8
-            ///  / \   \
-            /// 2   5   9
-            ///    /
-            ///   4
+            //     7
+            //    / \
+            //   3   8
+            //  / \   \
+            // 2   5   9
+            //    /
+            //   4
             
             tree.Remove(3);
 
@@ -106,13 +106,13 @@ namespace HRUC_Tests
             tree.Insert(9, "9");
             tree.Insert(4, "4");
 
-            ///     7
-            ///    / \
-            ///   3   8
-            ///  / \   \
-            /// 2   5   9
-            ///    /
-            ///   4
+            //     7
+            //    / \
+            //   3   8
+            //  / \   \
+            // 2   5   9
+            //    /
+            //   4
 
             string acc = "";
             Action<int, string> add_to_acc = (_, el) => acc += " " + el;
@@ -139,13 +139,13 @@ namespace HRUC_Tests
             tree.Insert(9, "9");
             tree.Insert(4, "4");
 
-            ///     7
-            ///    / \
-            ///   3   8
-            ///  / \   \
-            /// 2   5   9
-            ///    /
-            ///   4
+            //     7
+            //    / \
+            //   3   8
+            //  / \   \
+            // 2   5   9
+            //    /
+            //   4
 
             string acc = "";
             Action<int, string> add_to_acc = (_, el) => acc += " " + el;
@@ -171,13 +171,13 @@ namespace HRUC_Tests
             tree.Insert(9, "9");
             tree.Insert(4, "4");
 
-            ///     7
-            ///    / \
-            ///   3   8
-            ///  / \   \
-            /// 2   5   9
-            ///    /
-            ///   4
+            //     7
+            //    / \
+            //   3   8
+            //  / \   \
+            // 2   5   9
+            //    /
+            //   4
 
             string acc = "";
             Action<int, string> add_to_acc = (_, el) => acc += " " + el;

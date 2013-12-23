@@ -187,7 +187,7 @@ namespace HRUC.Math
             {
                 for (int row_num = curr_row + 1; row_num <= RowCount; row_num++)
                 {
-                    // Вопрос деления на 0 решен! пропускаем обнуление строки
+                    // если уже 0 не обнуляем
                     if (this[curr_row, curr_column] == 0) break;
 
                     // Обнуление строки
@@ -246,7 +246,7 @@ namespace HRUC.Math
                     var column = m2.GetColumn(j);
                     
                     // Складываем произведения соответствующих элементов
-                    res[i,j] = Enumerable.Zip(row, column, (a, b) => a * b).Sum();
+                    res[i,j] = row.Zip(column, (a, b) => a * b).Sum();
                 }
             }
 
@@ -285,11 +285,11 @@ namespace HRUC.Math
         /// </summary>
         public bool Equals(Matrix other)
         {
-            bool IsEquals = true;
+            bool isEquals = true;
 
-            other.Iter((row, column, value) => IsEquals &= this[row, column] == value);
+            other.Iter((row, column, value) => isEquals &= this[row, column] == value);
 
-            return IsEquals;
+            return isEquals;
         }
         #endregion
     }

@@ -10,33 +10,33 @@ namespace HRUC
     /// </summary>
     class SpeedBitmap
     {
-        Bitmap img;
-        BitmapData img_data;
-        byte[] image_pixel_array;
+        Bitmap _img;
+        BitmapData _imgData;
+        byte[] _imagePixelArray;
 
         /// <summary>
         /// Размер (в байтах) одного пиксела img
         /// </summary>
-        const int color_size = 4;
+        const int ColorSize = 4;
 
         Bitmap Image
         {
-            get { return img; }
-            set { img = value; }
+            get { return _img; }
+            set { _img = value; }
         }
 
         public void LockBitmap()
         {
             // Лочит все изображение, при больших размерах есть вероятность OutOfMemory
             // TODO: Поправить (или создать дополнительные методы для частичной блокировки)
-            img_data = img.LockBits(new Rectangle(Point.Empty, img.Size), 
+            _imgData = _img.LockBits(new Rectangle(Point.Empty, _img.Size), 
                 ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             copyPixelsToArray();
         }
         public void LockBitmap(Rectangle rectangle)
         {
-            img_data = img.LockBits(
+            _imgData = _img.LockBits(
                 rectangle, ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 
             copyPixelsToArray();
@@ -46,47 +46,47 @@ namespace HRUC
         {
             // Копируем измененные данные обратно в изображение
             Marshal.Copy(
-                source: image_pixel_array,
-                destination: img_data.Scan0,
+                source: _imagePixelArray,
+                destination: _imgData.Scan0,
                 startIndex: 0,
-                length: image_pixel_array.Length);
+                length: _imagePixelArray.Length);
 
-            img.UnlockBits(img_data);
+            _img.UnlockBits(_imgData);
         }
 
         private void copyPixelsToArray()
         {
             // Инициализируем массив для пикселей img
-            image_pixel_array = new byte[img_data.Height * img_data.Stride];
+            _imagePixelArray = new byte[_imgData.Height * _imgData.Stride];
 
             // Заполняем массив
             Marshal.Copy(
-                source: img_data.Scan0,
-                destination: image_pixel_array,
+                source: _imgData.Scan0,
+                destination: _imagePixelArray,
                 startIndex: 0,
-                length: image_pixel_array.Length);
+                length: _imagePixelArray.Length);
         }
 
         public Color GetPixel(int x, int y)
         {
-            int start_index = img_data.Height * y + color_size * x;
+            int start_index = _imgData.Height * y + ColorSize * x;
             
-            byte b = image_pixel_array[start_index];
-            byte g = image_pixel_array[start_index + 1];
-            byte r = image_pixel_array[start_index + 2];
-            byte a = image_pixel_array[start_index + 3];
+            byte b = _imagePixelArray[start_index];
+            byte g = _imagePixelArray[start_index + 1];
+            byte r = _imagePixelArray[start_index + 2];
+            byte a = _imagePixelArray[start_index + 3];
 
             return Color.FromArgb(a, r, g, b);            
         }
 
         public void SetPixel(int x, int y, Color c)
         {
-            int start_index = img_data.Height * y + color_size * x;
+            int start_index = _imgData.Height * y + ColorSize * x;
 
-            image_pixel_array[start_index] = c.B;
-            image_pixel_array[start_index + 1] = c.G;
-            image_pixel_array[start_index + 2] = c.R;
-            image_pixel_array[start_index + 3] = c.A;
+            _imagePixelArray[start_index] = c.B;
+            _imagePixelArray[start_index + 1] = c.G;
+            _imagePixelArray[start_index + 2] = c.R;
+            _imagePixelArray[start_index + 3] = c.A;
         }
 
         public Color this[int x, int y]
