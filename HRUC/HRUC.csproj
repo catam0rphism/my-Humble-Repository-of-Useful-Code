@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="BSTree.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Hooks\KeyboardHook.cs" />
+    <Compile Include="Hooks\MouseHook.cs" />
+    <Compile Include="Hooks\Native.cs" />
     <Compile Include="Math\ComplexPlane.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="SpeedBitmap.cs" />
