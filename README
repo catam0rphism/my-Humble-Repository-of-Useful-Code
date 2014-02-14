@@ -4,7 +4,7 @@ my Humble Repository of Useful Code
 
 ---------------------------------------
 *** Extensions class
-  contains extension methods for IEnumerable collections and other classes.
+  contains extension methods for IEnumerable collections and other classes
   
 *** SpeedBitMap class
   provides methods for high-speed editing of image pixels (GetPixel and SetPixel methods significantly slower)
@@ -23,3 +23,12 @@ My implementation of some mathematical structures and concepts
  
 *** ComplexPlane class
   represent complex plane and relate it to the image coordinates (used for fractals)
+
+
+HRUC.Hooks
+=======================================
+Classes for working with windows hooks
+
+---------------------------------------
+*** MouseHook and KeyboardHook
+  represent mouse and keyboard events, provides a link between managed code and winapi
