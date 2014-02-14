@@ -61,7 +61,7 @@
     <Compile Include="MatrixTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SLUT\HRUC.csproj">
+    <ProjectReference Include="..\HRUC\HRUC.csproj">
       <Project>{33dfee9b-89b3-46d6-8845-8b13e9d9d27d}</Project>
       <Name>HRUC</Name>
     </ProjectReference>
