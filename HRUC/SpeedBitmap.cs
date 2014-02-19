@@ -8,8 +8,18 @@ namespace HRUC
     /// Класс, реализующий быстрый доступ к ручному редактированию пикселей
     /// т.к. методы GetPixel() и SetPixel() жутко медленные
     /// </summary>
-    class SpeedBitmap
+    public class SpeedBitmap
     {
+        public SpeedBitmap(Bitmap img)
+        {
+            _img = img;
+            //_img = (Bitmap)img.Clone();
+        }
+        public SpeedBitmap(int width, int height)
+        {
+            _img = new Bitmap(width, height);
+        }
+
         Bitmap _img;
         BitmapData _imgData;
         byte[] _imagePixelArray;
@@ -19,7 +29,7 @@ namespace HRUC
         /// </summary>
         const int ColorSize = 4;
 
-        Bitmap Image
+        public Bitmap Image
         {
             get { return _img; }
             set { _img = value; }
