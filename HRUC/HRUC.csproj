@@ -45,6 +45,7 @@
     <Compile Include="Hooks\KeyboardHook.cs" />
     <Compile Include="Hooks\MouseHook.cs" />
     <Compile Include="Hooks\Native.cs" />
+    <Compile Include="Images\Histogram.cs" />
     <Compile Include="Math\ComplexPlane.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="Images\SpeedBitmap.cs" />
