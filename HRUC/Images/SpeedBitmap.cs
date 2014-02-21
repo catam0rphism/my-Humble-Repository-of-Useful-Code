@@ -2,7 +2,7 @@
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace HRUC
+namespace HRUC.Images
 {
     /// <summary>
     /// Класс, реализующий быстрый доступ к ручному редактированию пикселей

@@ -47,7 +47,7 @@
     <Compile Include="Hooks\Native.cs" />
     <Compile Include="Math\ComplexPlane.cs" />
     <Compile Include="Math\Matrix.cs" />
-    <Compile Include="SpeedBitmap.cs" />
+    <Compile Include="Images\SpeedBitmap.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
