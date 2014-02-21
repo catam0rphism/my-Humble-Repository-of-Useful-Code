@@ -10,10 +10,18 @@ namespace HRUC.Images
     /// </summary>
     public class SpeedBitmap
     {
+        public SpeedBitmap(Image img)
+        {
+            _img = new Bitmap(img);
+        }
         public SpeedBitmap(Bitmap img)
         {
             _img = img;
             //_img = (Bitmap)img.Clone();
+        }
+        public SpeedBitmap(Size size)
+        {
+            _img = new Bitmap(size.Width,size.Height);
         }
         public SpeedBitmap(int width, int height)
         {
