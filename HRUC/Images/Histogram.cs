@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define DEBUG
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,8 +11,14 @@ namespace HRUC.Images
 {
     public class Histogram
     {
-
-        public static int[] MakeHistogram(Image image)
+        public enum HistogramType
+        {
+            Brightness,
+            Red,
+            Green,
+            Blue
+        }
+        public static int[] MakeHistogram(Image image, HistogramType histoType)
         {
             int levelCount = 256;
             // Массив, содержащий число пикселей по уровням яркости
@@ -19,39 +27,63 @@ namespace HRUC.Images
             SpeedBitmap img = new SpeedBitmap(image);
 
             img.LockBitmap();
-
+            
             for (int i = 0; i < image.Width; i++)
             {
                 for (int j = 0; j < image.Height; j++)
                 {
                     Color c = img[i, j];
-                    // Яркость цвета - индекс в выходном массиве
-                    int ind = (int)(c.GetBrightness() * (levelCount-1));
-
+                    
+                    int ind = -1;
+                    switch (histoType)
+                    {
+                        case HistogramType.Brightness:
+                            ind = (int)(c.GetBrightness() * (levelCount-1));
+                            //ind = (int)System.Math.Sqrt(c.R * c.R * 0.241 + c.G * c.G * 0.691 + c.B * c.B * 0.068);
+                            break;
+                        case HistogramType.Red:
+                            ind = c.R;
+                            break;
+                        case HistogramType.Green:
+                            ind = c.G;
+                            break;
+                        case HistogramType.Blue:
+                            ind = c.B;
+                            break;
+                        default:
+                            break;
+                    }
+                    
                     histo[ind]++;
                 }
             }
 
             img.UnlockBitmap();
-
+                        
             return histo;
         }
-        public static Image MakeHistogram(Image image, Size histoSize)
+        public static Image MakeHistogram(Image image,HistogramType histoType, Size histoSize)
         {
             int levelCount = 256;
             Bitmap img = new Bitmap(histoSize.Width, histoSize.Height);
             using (Graphics g = Graphics.FromImage(img))
             {
-                int[] histo = MakeHistogram(image);
+                int[] histo = MakeHistogram(image,histoType);
 
                 float dx = (float)histoSize.Width / (float)levelCount;
                 float dy = (float)histoSize.Height / (float)histo.Max();
                 g.Clear(Color.White);
 
+                Color color = histoType == HistogramType.Brightness ? Color.Black
+                    : histoType == HistogramType.Red ? Color.Red
+                    : histoType == HistogramType.Green ? Color.Green
+                    : histoType == HistogramType.Blue ? Color.Blue
+                    : Color.Black; // Никогда не сработает
+
                 for (int i = 0; i < levelCount; i++)
                 {
                     // Рисуем развернутую гистограму
-                    g.FillRectangle(new SolidBrush(Color.Black),
+                    g.FillRectangle(new SolidBrush(color),
                         x: i * dx,
                         y:  0,
                         width: dx,
@@ -62,6 +94,8 @@ namespace HRUC.Images
 
             img.RotateFlip(RotateFlipType.Rotate180FlipX);
             return img;
+
+            
         }
     }
 }

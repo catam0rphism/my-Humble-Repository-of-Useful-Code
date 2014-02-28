@@ -14,7 +14,7 @@ namespace HRUC_Tests
             int acc = 0;
             seq.ForEach(n => acc+=n);
 
-            Assert.AreEqual(0x13+ 0xA1+ 0xFF, acc);
+            Assert.AreEqual(0x13 + 0xA1 + 0xFF, acc);
 
         }
     }

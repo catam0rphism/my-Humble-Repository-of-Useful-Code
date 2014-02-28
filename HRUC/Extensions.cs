@@ -31,7 +31,6 @@ namespace HRUC
         public static class MatrixExtensions
         {
             #region map functions
-
             /// <summary>
             /// Проецирует каждый элемент на новую матрицу
             /// </summary>
