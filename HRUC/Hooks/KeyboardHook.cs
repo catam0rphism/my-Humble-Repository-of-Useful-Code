@@ -48,6 +48,7 @@ namespace HRUC.Hooks
                 hookID = Native.SetWindowsHookEx(
                     idHook: (int)Native.HookType.KEYBOARD_LL,
                     lpfn: HookFunc,
+                    // Реботает для форм, возможно служб. Для консоли надо изобретать нечто иное
                     hMod: Native.GetModuleHandle(module.ModuleName),
                     dwThreadId: 0);
             }
