@@ -87,7 +87,7 @@ namespace HRUC.Images
 
         public Color GetPixel(int x, int y)
         {
-            int start_index = _imgData.Height * y + ColorSize * x;
+            int start_index = _imgData.Stride * y + ColorSize * x;
             
             byte b = _imagePixelArray[start_index];
             byte g = _imagePixelArray[start_index + 1];
@@ -99,7 +99,7 @@ namespace HRUC.Images
 
         public void SetPixel(int x, int y, Color c)
         {
-            int start_index = _imgData.Height * y + ColorSize * x;
+            int start_index = _imgData.Stride * y + ColorSize * x;
 
             _imagePixelArray[start_index] = c.B;
             _imagePixelArray[start_index + 1] = c.G;
