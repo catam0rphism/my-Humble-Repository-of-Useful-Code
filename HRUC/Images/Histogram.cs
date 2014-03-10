@@ -9,15 +9,39 @@ using System.Threading.Tasks;
 
 namespace HRUC.Images
 {
-    public class Histogram
+    /// <summary>
+    /// Реализует методы построения гистограм изображения
+    /// </summary>
+    public static class Histogram
     {
+        /// <summary>
+        /// Тип гистограмы
+        /// </summary>
         public enum HistogramType
         {
+            /// <summary>
+            /// Гистограма яркости
+            /// </summary>
             Brightness,
+            /// <summary>
+            /// Гисторама красного канала
+            /// </summary>
             Red,
+            /// <summary>
+            /// Гистограма зеленого канала
+            /// </summary>
             Green,
+            /// <summary>
+            /// Гистограма синего канало
+            /// </summary>
             Blue
         }
+        /// <summary>
+        /// Генерирует гистограму изображения
+        /// </summary>
+        /// <param name="image">Изображение</param>
+        /// <param name="histoType">Тип гистограмы</param>
+        /// <returns>Массив в 256 элементов, где каждый элемент соответствует числу пикселей</returns>
         public static int[] MakeHistogram(Image image, HistogramType histoType)
         {
             int levelCount = 256;
@@ -62,6 +86,13 @@ namespace HRUC.Images
                         
             return histo;
         }
+        /// <summary>
+        /// Генерирует изображение гистограмы
+        /// </summary>
+        /// <param name="image">Изображение, гистограму которого требуется построить</param>
+        /// <param name="histoType">Тип гистограмы</param>
+        /// <param name="histoSize">Размер гистограмы</param>
+        /// <returns>Гистограма, размера histoSize требуемого канала</returns>
         public static Image MakeHistogram(Image image,HistogramType histoType, Size histoSize)
         {
             int levelCount = 256;
@@ -78,7 +109,7 @@ namespace HRUC.Images
                     : histoType == HistogramType.Red ? Color.Red
                     : histoType == HistogramType.Green ? Color.Green
                     : histoType == HistogramType.Blue ? Color.Blue
-                    : Color.Black; // Никогда не сработает
+                    : Color.HotPink; // Никогда не сработает
 
                 for (int i = 0; i < levelCount; i++)
                 {
