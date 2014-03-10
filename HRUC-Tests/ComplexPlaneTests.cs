@@ -14,7 +14,8 @@ namespace HRUC_Tests
         [ClassInitialize]
         public static void Initialize(TestContext tc)
         {
-            _complexPlane = new ComplexPlane(0.002, 347, 347*4, new Complex(0, 0));
+            //_complexPlane = new ComplexPlane(0.002, 347, 347*4, new Complex(0, 0));
+            _complexPlane = new ComplexPlane(new Complex(0.347 * 2, 0.347 * 8), 347, 347 * 4, Complex.Zero);
         }
 
         [TestMethod]

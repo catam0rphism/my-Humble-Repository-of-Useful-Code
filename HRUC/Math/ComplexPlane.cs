@@ -15,10 +15,10 @@ namespace HRUC.Math
     {
         #region Fields
 
-        private Complex _center;
-        private double _delta;
-        private int _height;
-        private int _width;
+        private readonly Complex _center;
+        private readonly double _delta;
+        private readonly int _height;
+        private readonly int _width;
 
         #endregion
 
@@ -26,9 +26,7 @@ namespace HRUC.Math
 
         // исключительно для сериализации
         private ComplexPlane()
-            : this(Complex.Zero, 0, 0, Complex.Zero)
-        {
-        }
+            : this(Complex.Zero, 0, 0, Complex.Zero) { }
 
         public ComplexPlane(double delta, int width, int height, Complex center)
         {
@@ -43,18 +41,32 @@ namespace HRUC.Math
             : this(0, width, height, center)
         {
             //delta = Math.Max(Diff.Imaginary,Diff.Real) / Math.Max(width,height);
-            Diff = diff;
+            if (diff.Real > diff.Imaginary)
+            {
+                _delta = diff.Real / _width;
+            }
+            else
+            {
+                _delta = diff.Imaginary / _height;
+            }
         }
 
         #endregion
 
         /// <summary>
-        ///     Получает или задает центральную точку
+        ///     Получает центральную точку
         /// </summary>
         public Complex Center
         {
             get { return _center; }
-            set { _center = value; }
+        }
+        /// <summary>
+        ///     Создает новый объект ComplexPlane с центром, переданным в параметре
+        /// </summary>
+        /// <param name="Center">Значение центра части комплексной плоскости</param>
+        public ComplexPlane SetCenter(Complex Center)
+        {
+            return new ComplexPlane(_delta, _width, _height, Center);
         }
 
         /// <summary>
@@ -63,18 +75,14 @@ namespace HRUC.Math
         public Complex Diff
         {
             get { return new Complex(_delta*_width, _delta*_height); }
-            set
-            {
-                // rewrite
-                if (value.Real > value.Imaginary)
-                {
-                    _delta = value.Real/_width;
-                }
-                else
-                {
-                    _delta = value.Imaginary/_height;
-                }
-            }
+        }
+        /// <summary>
+        ///     Создает новый объект ComplexPlane используя диапазон, переданный в параметре
+        /// </summary>
+        /// <param name="Difference">Значение диапазона</param>
+        public ComplexPlane SetDifference(Complex Difference)
+        {
+            return new ComplexPlane(Difference, _width, _height, _center);
         }
 
         /// <summary>
@@ -83,7 +91,14 @@ namespace HRUC.Math
         public double Delta
         {
             get { return _delta; }
-            set { _delta = value; }
+        }
+        /// <summary>
+        ///     Создает новый объект ComplexPlane используя шаг дескритизации, переданный в параметре
+        /// </summary>
+        /// <param name="Delta">Шаг дескритизации</param>
+        public ComplexPlane SetDelta(double Delta)
+        {
+            return new ComplexPlane(Delta, _width, _height, _center);
         }
 
         /// <summary>
@@ -103,21 +118,28 @@ namespace HRUC.Math
         }
 
         /// <summary>
-        ///     Ширина изображения (При изменении не меняет дельту)
+        ///     Ширина изображения
         /// </summary>
         public int Width
         {
             get { return _width; }
-            set { _width = value; }
+        }
+        // не меняет дельту
+        public ComplexPlane SetWidth(int Width)
+        {
+            return new ComplexPlane(_delta, Width, _height, _center);
         }
 
         /// <summary>
-        ///     Высота изображения (При изменении не меняет дельту)
+        ///     Высота изображения
         /// </summary>
         public int Height
         {
             get { return _height; }
-            set { _height = value; }
+        }
+        public ComplexPlane SetHeight(int Height)
+        {
+            return new ComplexPlane(_delta, _width, Height, _center);
         }
 
         /// <summary>
@@ -126,11 +148,10 @@ namespace HRUC.Math
         public Size Size
         {
             get { return new Size(_width, _height); }
-            set { Resize(value.Width, value.Height); }
         }
 
         /// <summary>
-        ///     Индексатор, соотнесение пикселя и соответствующего комплексного числа
+        ///     Получает комплексное число соответствующее пикселю
         /// </summary>
         /// <param name="w">номер пиксела по горизонтали</param>
         /// <param name="h">номер пиксела по вертикали</param>
@@ -203,14 +224,9 @@ namespace HRUC.Math
         /// </summary>
         /// <param name="w">Новое значение ширины</param>
         /// <param name="h">Новое значение высоты</param>
-        public void Resize(int w, int h)
+        public ComplexPlane Resize(int w, int h)
         {
-            // Меняет дельту?
-            Complex c = Diff;
-            _width = w;
-            _height = h;
-            Diff = c;
-            // Меняет! но активная область всегда входит
+            return new ComplexPlane(Diff, w, h, _center);
         }
 
         public Complex GetComplex(int w, int h)
