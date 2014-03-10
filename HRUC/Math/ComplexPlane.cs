@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace HRUC.Math
 {
@@ -11,7 +12,7 @@ namespace HRUC.Math
     /// </summary>
     [Serializable]
     public class ComplexPlane
-        : ICloneable, IEquatable<ComplexPlane>
+        : ICloneable, IEquatable<ComplexPlane>, IEnumerable<Complex>
     {
         #region Fields
 
@@ -272,5 +273,20 @@ namespace HRUC.Math
         }
 
         #endregion
+
+        IEnumerator<Complex> IEnumerable<Complex>.GetEnumerator()
+        {
+            for (int i = 0; i < _width; i++)
+            {
+                for (int j = 0; j < _height; j++)
+                {
+                    yield return GetComplex(i, j);
+                }
+            }
+        }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable<Complex>)this).GetEnumerator();
+        }
     }
 }
