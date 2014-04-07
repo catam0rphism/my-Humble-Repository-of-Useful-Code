@@ -42,6 +42,12 @@
   <ItemGroup>
     <Compile Include="BSTree.cs" />
     <Compile Include="CommonComparer.cs" />
+    <Compile Include="Components\InputBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Hooks\KeyboardHook.cs" />
     <Compile Include="Hooks\MouseHook.cs" />
@@ -54,11 +60,18 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Components\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
