@@ -12,7 +12,7 @@ namespace HRUC.Math
     /// </summary>
     [Serializable]
     public class ComplexPlane
-        : ICloneable, IEquatable<ComplexPlane>, IEnumerable<Complex>
+        : ICloneable, IEquatable<ComplexPlane>
     {
         #region Fields
 
@@ -26,11 +26,17 @@ namespace HRUC.Math
         #region Constructors
 
         // исключительно для сериализации
-        private ComplexPlane()
+        public ComplexPlane()
             : this(Complex.Zero, 0, 0, Complex.Zero) { }
 
         public ComplexPlane(double delta, int width, int height, Complex center)
         {
+            if (delta == double.NaN
+                || center == new Complex(double.NaN, double.NaN)
+                || double.IsInfinity(delta)
+                || double.IsInfinity(center.Real)
+                || double.IsInfinity(center.Imaginary))
+                    throw new ArgumentException("delta or center has invalid value");
             _delta = delta;
             _width = width;
             _height = height;
@@ -273,20 +279,5 @@ namespace HRUC.Math
         }
 
         #endregion
-
-        IEnumerator<Complex> IEnumerable<Complex>.GetEnumerator()
-        {
-            for (int i = 0; i < _width; i++)
-            {
-                for (int j = 0; j < _height; j++)
-                {
-                    yield return GetComplex(i, j);
-                }
-            }
-        }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return ((IEnumerable<Complex>)this).GetEnumerator();
-        }
     }
 }
