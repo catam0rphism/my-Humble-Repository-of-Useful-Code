@@ -27,7 +27,7 @@ namespace HRUC.Math
 
         // исключительно для сериализации
         public ComplexPlane()
-            : this(Complex.Zero, 0, 0, Complex.Zero) { }
+            : this(1, 1, 1, Complex.Zero) { }
 
         public ComplexPlane(double delta, int width, int height, Complex center)
         {
@@ -36,7 +36,7 @@ namespace HRUC.Math
                 || double.IsInfinity(delta)
                 || double.IsInfinity(center.Real)
                 || double.IsInfinity(center.Imaginary))
-                    throw new ArgumentException("delta or center has invalid value");
+                throw new ArgumentException("delta or center has invalid value");
             _delta = delta;
             _width = width;
             _height = height;
@@ -48,13 +48,13 @@ namespace HRUC.Math
             : this(0, width, height, center)
         {
             //delta = Math.Max(Diff.Imaginary,Diff.Real) / Math.Max(width,height);
-            if (diff.Real > diff.Imaginary)
+            if (width > height)
             {
-                _delta = diff.Real / _width;
+                _delta = diff.Imaginary / _height;
             }
             else
             {
-                _delta = diff.Imaginary / _height;
+                _delta = diff.Real / _width;
             }
         }
 
@@ -89,7 +89,7 @@ namespace HRUC.Math
         /// <param name="Difference">Значение диапазона</param>
         public ComplexPlane SetDifference(Complex Difference)
         {
-            return new ComplexPlane(Difference, _width, _height, _center);
+                    return new ComplexPlane(Difference, _width, _height, _center);
         }
 
         /// <summary>
