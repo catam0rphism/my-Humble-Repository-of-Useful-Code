@@ -18,6 +18,15 @@ namespace HRUC.Components
             //Resize += (s, ea) => setTextBoxSizeAndLocation();
             //label.TextChanged += (s, ea) => setTextBoxSizeAndLocation();
 
+            textBox.TextChanged += (s, ea) =>
+                {
+                    EventHandler temp = TextChanged;
+                    if (temp != null)
+                    {
+                        temp(s, ea);
+                    }
+                };
+
         }
 
         private void setTextBoxSizeAndLocation()
@@ -85,5 +94,7 @@ namespace HRUC.Components
                 textBox.Text = value.ToString();
             }
         }
+
+        public event EventHandler TextChanged;
     }
 }
