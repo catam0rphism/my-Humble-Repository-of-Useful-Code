@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HRUC
+namespace HRUC.Collections
 {
     public interface IBinaryTree<T>
     {

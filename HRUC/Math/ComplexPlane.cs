@@ -279,5 +279,10 @@ namespace HRUC.Math
         }
 
         #endregion
+
+        public ComplexPlane Resize(System.Drawing.Size size)
+        {
+            return new ComplexPlane(Diff, size.Width, size.Height, _center);
+        }
     }
 }

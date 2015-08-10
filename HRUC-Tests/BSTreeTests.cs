@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HRUC;
+using HRUC.Collections;
 
 namespace HRUC_Tests
 {

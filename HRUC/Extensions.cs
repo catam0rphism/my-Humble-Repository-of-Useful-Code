@@ -24,6 +24,15 @@ namespace HRUC
             }
             return null;
         }
+
+        public static void Raise<TEventArgs>(this EventHandler<TEventArgs> @event, object sender, TEventArgs e)
+        {
+            var temp = System.Threading.Volatile.Read(ref @event);
+            if (temp != null)
+            {
+                temp(sender, e);
+            }
+        }
     }
 
     namespace Math

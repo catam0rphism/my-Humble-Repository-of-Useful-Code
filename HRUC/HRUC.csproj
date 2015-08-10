@@ -40,7 +40,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSTree.cs" />
+    <Compile Include="Collections\BSTree.cs" />
+    <Compile Include="Collections\DictionaryExtensions.cs" />
     <Compile Include="CommonComparer.cs" />
     <Compile Include="Components\InputBox.cs">
       <SubType>UserControl</SubType>
