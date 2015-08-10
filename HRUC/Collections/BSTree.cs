@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HRUC.Collections
 {
@@ -229,6 +230,27 @@ namespace HRUC.Collections
                 && IsCorrectBSTree(bstree.LeftNode) // рекурсивный вызов для левой ветви
                 && IsCorrectBSTree(bstree.RightNode); // .. для правой ветви
 
+        }
+    }
+    
+    // TODO: test it
+    public static class TreeUtils
+    {
+        public static List<T> TreeSort<T>(IEnumerable<T> collection)
+            where T: IComparable<T>
+        {
+            BSTree<T, object> tmpTree = new BSTree<T, object>();
+
+            foreach (var number in collection)
+            {
+                tmpTree.Insert(number, default(object)); // omfg default(object)
+                // performance problem?
+            }
+
+            List<T> result = new List<T>();
+            tmpTree.Traverse_infix((num, _) => { result.Add(num); });
+
+            return result;            
         }
     }
 }
