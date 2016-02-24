@@ -95,6 +95,13 @@ namespace HRUC.Components
             }
         }
 
-        public event EventHandler TextChanged;
+        public T getValue<T>(Func<String,T> converter, Predicate<T> validator) where T: class {
+            T foo = converter(textBox.Text);
+            if (validator(foo))
+                return foo;
+            else return null;
+        }
+
+        public new event EventHandler TextChanged;
     }
 }
