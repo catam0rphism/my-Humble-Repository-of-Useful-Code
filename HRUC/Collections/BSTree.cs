@@ -96,6 +96,11 @@ namespace HRUC.Collections
                     RightNode = new BSTree<TKey, TData> { Key = k, Data = data, _parent = this };
             }
         }
+        // Для поддержки инициализаторов коллекций
+        public void Add(TKey k, TData data)
+        {
+            Insert(k, data);
+        }
         /// <summary>
         /// Удаляет элемент из дерева
         /// </summary>
