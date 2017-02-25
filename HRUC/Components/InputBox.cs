@@ -78,7 +78,7 @@ namespace HRUC.Components
                 else { textBox.Text = ""; }
             }
         }
-        public double ValueDouble
+        public double? ValueDouble
         {
             get
             {
@@ -87,7 +87,7 @@ namespace HRUC.Components
                 {
                     return i;
                 }
-                else { return double.NaN; }
+                else { return null; }
             }
             set
             {
